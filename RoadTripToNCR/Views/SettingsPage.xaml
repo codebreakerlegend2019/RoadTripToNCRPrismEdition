@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:CustomShellPage
+ xmlns:views="clr-namespace:RoadTripToNCR.Views"
+    x:Class="RoadTripToNCR.Views.SettingsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:RoadTripToNCR.Helpers.Behavior;assembly=RoadTripToNCR"
+    xmlns:prism="http://prismlibrary.com"
+    Title="{Binding Title}"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="{DynamicResource PageBackgroundColor}"
+    IsSettingsButtonVisible="False">
+
+    <StackLayout>
+        <StackLayout
+            HorizontalOptions="FillAndExpand"
+            Orientation="Vertical"
+            VerticalOptions="Start">
+            <Label
+                FontSize="Title"
+                HorizontalOptions="StartAndExpand"
+                Text="Select Themes"
+                TextColor="{DynamicResource TitleTextColor}" />
+            <RadioButton Text="Light" TextColor="{DynamicResource TitleTextColor}"
+                         IsChecked="{Binding IsLightModeOn}"
+                         Command="{Binding ChangeThemeCommand}"
+                         CommandParameter="Light"/>
+    <RadioButton Text="Dark" TextColor="{DynamicResource TitleTextColor}"
+                 IsChecked="{Binding IsDarkModeOn}"
+                         Command="{Binding ChangeTheme}"
+                         CommandParameter="Dark"/>
+        </StackLayout>
+    </StackLayout>
+</views:CustomShellPage>

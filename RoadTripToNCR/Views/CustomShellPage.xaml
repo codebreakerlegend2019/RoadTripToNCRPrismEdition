@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="RoadTripToNCR.Views.CustomShellPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:material="clr-namespace:RoadTripToNCR.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com"
+    prism:ViewModelLocator.AutowireViewModel="True">
+    <NavigationPage.TitleView>
+        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+            <Label
+                x:Name="TitleLabel"
+                FontAttributes="Bold"
+                FontFamily="{StaticResource RobotoCondensed}"
+                FontSize="Title"
+                HorizontalOptions="StartAndExpand"
+                HorizontalTextAlignment="Start"
+                LineBreakMode="NoWrap"
+                TextColor="{DynamicResource TitleTextColor}"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center" />
+            <Button
+                Visual="Default"
+                x:Name="SettingButton"
+                BackgroundColor="Transparent"
+                Command="{Binding GoToSettingsCommand}"
+                FontFamily="{StaticResource MaterialFontFamily}"
+                FontSize="Title"
+                HorizontalOptions="EndAndExpand"
+                IsEnabled="True"
+                Text="{x:Static material:MaterialFonts.Cog}"
+                TextColor="{DynamicResource TitleTextColor}" />
+
+        </StackLayout>
+
+    </NavigationPage.TitleView>
+
+</ContentPage>
