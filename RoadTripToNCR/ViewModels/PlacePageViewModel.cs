@@ -5,6 +5,7 @@ using Prism.Navigation;
 using Prism.Navigation.Xaml;
 using RoadTripToNCR.Interfaces;
 using RoadTripToNCR.Models;
+using RoadTripToNCR.Themes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,25 +27,37 @@ namespace RoadTripToNCR.ViewModels
         private List<City> _cities;
         public List<City> Cities
         {
-            get { return _cities; }
+            get => _cities;
             set 
             {
                 _cities = value;
                 RaisePropertyChanged(nameof(Cities));
             }
         }
-        public List<Category> Categories { get; set; }
+        private List<Category> _categories;
+        public List<Category> Categories 
+        {
+            get => _categories;
+            set { _categories = value; }
+        }
         public List<Place> Places { get; set; }
         private List<Place> _places { get; set; }
         private City _selectedCity;
         public City SelectedCity
         {
-            get { return _selectedCity; }
-            set { _selectedCity = value; } 
+            get => _selectedCity;
+            set { _selectedCity = value; }
         }
-        public string SelectedCityText { get; set; }
-        public Category SelectedCategory { get; set; }
-        public string SelectedCategoryText { get; set; }
+
+        private Category _selectedCategory;
+        public Category SelectedCategory
+        {
+            get => _selectedCategory;
+            set
+            {
+                _selectedCategory = value;
+            }
+        }
         public PlacePageViewModel(INavigationService navigationService, 
             IGetAllAsync<Place> placeRepo, 
             IGetAll<City> cityRepo,
@@ -79,16 +92,16 @@ namespace RoadTripToNCR.ViewModels
             }
             RaisePropertyChanged(nameof(SelectedCity));
         }
+
+   
         public DelegateCommand CitySelectionChangedCommand => new DelegateCommand(async() =>
         {
             if  (Places.Count > 0)
             {
                 UpdateCities();
-                SelectedCityText = $"Selected: {SelectedCity.Name}";
                 Places = _places.Where(x => x.City == SelectedCity.FilterName)
                 .OrderBy(x => x.Name)
                 .ToList();
-                RaisePropertyChanged(nameof(SelectedCityText));
                 RaisePropertyChanged(nameof(Places));
             }
             else
@@ -98,18 +111,28 @@ namespace RoadTripToNCR.ViewModels
                 await App.Current.MainPage.DisplayAlert("Info", "Places are still Loading", "OK");
             }
         });
+
+        private void UpdateCategories()
+        {
+            _selectedCategory.IsSelected = true;
+
+            foreach (var category in _categories)
+            {
+                if (category.IsSelected && category.Name != _selectedCategory.Name)
+                    category.IsSelected = false;
+            }
+            RaisePropertyChanged(nameof(Categories));
+            RaisePropertyChanged(nameof(SelectedCategory));
+        }
         public DelegateCommand CategorySelectionChangeCommand => new DelegateCommand( async() =>
         {
             if(SelectedCity!=null && Places.Count>0)
             {
-                SelectedCityText = $"Selected: {SelectedCategory.Name}";
+                UpdateCategories();
                 Places = _places
                 .Where(x => x.City == SelectedCity.FilterName && x.Type == SelectedCategory.FilterName)
                 .OrderBy(x => x.Name)
                 .ToList();
-                SelectedCategory = null;
-                RaisePropertyChanged(nameof(SelectedCategory));
-                RaisePropertyChanged(nameof(SelectedCategoryText));
                 RaisePropertyChanged(nameof(Places));
             }
             else

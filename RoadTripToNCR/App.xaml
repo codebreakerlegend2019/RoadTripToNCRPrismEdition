@@ -18,7 +18,6 @@
                 <On Platform="UWP" Value="Assets/Fonts/materialdesignicons-webfont.ttf#Material Design Icons" />
             </OnPlatform>
 
-
             <Style x:Key="ItemText" TargetType="Label">
                 <Setter Property="TextColor" Value="{DynamicResource TitleTextColor}" />
                 <Setter Property="FontFamily" Value="{StaticResource RobotoCondensed}" />

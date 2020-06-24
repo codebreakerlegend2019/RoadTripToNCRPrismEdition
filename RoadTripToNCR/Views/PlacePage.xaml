@@ -52,16 +52,6 @@
                     TextColor="{DynamicResource TitleTextColor}"
                     VerticalOptions="Start"
                     VerticalTextAlignment="Center" />
-                <Label
-                    FontAttributes="Bold"
-                    FontFamily="{StaticResource MaterialFontFamily}"
-                    FontSize="Title"
-                    HorizontalTextAlignment="Start"
-                    LineBreakMode="NoWrap"
-                    Text="{Binding SelectedCityText}"
-                    TextColor="{DynamicResource TitleTextColor}"
-                    VerticalOptions="Start"
-                    VerticalTextAlignment="Center" />
             </StackLayout>
             <CollectionView
                 HorizontalScrollBarVisibility="Always"
@@ -85,7 +75,7 @@
                                 Margin="0,0,0,0"
                                 Aspect="Fill"
                                 Data="M16.031983,0C19.836016,0 22.238036,3.9039392 25.642066,3.7029426 27.644083,3.3029487 28.345089,3.2029502 28.445089,3.7029426 28.044086,4.5039299 27.944085,5.6049126 29.045094,5.9059082 33.149131,7.1068892 32.849128,9.9098456 28.945094,12.111811 27.944085,13.212794 27.544082,14.313777 28.445089,15.715755 22.939042,15.815753 20.737023,14.11378 16.031983,14.11378 11.326943,14.11378 9.1249239,15.815753 3.5188761,15.715755 4.4198837,14.313777 4.0198803,13.112795 3.0188713,12.111811 -0.78516102,9.9098456 -1.1861649,7.1068892 2.9188709,5.9059082 4.0198803,5.6049126 3.919879,4.4039314 3.5188761,3.7029426 3.7188778,3.3029487 4.4198837,3.3029487 6.3218999,3.7029426 9.8259299,3.9039392 12.12795,0 16.031983,0z"
-                                Fill="{Binding SelectedColor, Mode=TwoWay}"
+                                Fill="{Binding SelectedColor}"
                                 HeightRequest="50"
                                 Stroke="{DynamicResource TitleTextColor}"
                                 WidthRequest="150">
@@ -133,16 +123,6 @@
                     TextColor="{DynamicResource TitleTextColor}"
                     VerticalOptions="Start"
                     VerticalTextAlignment="Center" />
-                <Label
-                    FontAttributes="Bold"
-                    FontFamily="{StaticResource MaterialFontFamily}"
-                    FontSize="Title"
-                    HorizontalTextAlignment="Start"
-                    LineBreakMode="NoWrap"
-                    Text="{Binding SelectedCategoryText}"
-                    TextColor="{DynamicResource TitleTextColor}"
-                    VerticalOptions="Start"
-                    VerticalTextAlignment="Center" />
             </StackLayout>
             <CollectionView
                 ItemSizingStrategy="MeasureAllItems"
@@ -156,14 +136,17 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid ColumnDefinitions="Auto" RowDefinitions="Auto">
+                        <Grid
+                            ColumnDefinitions="Auto"
+                            RowDefinitions="Auto"
+                            Style="{StaticResource CollectionViewItemGrid}">
                             <Path
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 Margin="0,0,0,0"
                                 Aspect="Fill"
                                 Data="M16.031983,0C19.836016,0 22.238036,3.9039392 25.642066,3.7029426 27.644083,3.3029487 28.345089,3.2029502 28.445089,3.7029426 28.044086,4.5039299 27.944085,5.6049126 29.045094,5.9059082 33.149131,7.1068892 32.849128,9.9098456 28.945094,12.111811 27.944085,13.212794 27.544082,14.313777 28.445089,15.715755 22.939042,15.815753 20.737023,14.11378 16.031983,14.11378 11.326943,14.11378 9.1249239,15.815753 3.5188761,15.715755 4.4198837,14.313777 4.0198803,13.112795 3.0188713,12.111811 -0.78516102,9.9098456 -1.1861649,7.1068892 2.9188709,5.9059082 4.0198803,5.6049126 3.919879,4.4039314 3.5188761,3.7029426 3.7188778,3.3029487 4.4198837,3.3029487 6.3218999,3.7029426 9.8259299,3.9039392 12.12795,0 16.031983,0z"
-                                Fill="{DynamicResource FrameBackgroundColor}"
+                                Fill="{Binding SelectedColor}"
                                 HeightRequest="50"
                                 Stroke="{DynamicResource TitleTextColor}"
                                 WidthRequest="150">

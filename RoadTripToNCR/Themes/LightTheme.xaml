@@ -5,8 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Color x:Key="PageBackgroundColor">#FFFEFF</Color>
-    <Color x:Key="FrameSelectedColor">Red</Color>
-    <Color x:Key="FrameBackgroundColor">AliceBlue</Color>
+    <Color x:Key="FrameSelectedColor">#00ACC1</Color>
+    <Color x:Key="FrameBackgroundColor">#80DEEA</Color>
     <Color x:Key="NavigationBarColor">#F5F5F5</Color>
     <Color x:Key="TitleTextColor">#292829</Color>
     <Color x:Key="TabbedSelectedColor">#FF0000</Color>
