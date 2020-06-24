@@ -9,7 +9,6 @@ using Xamarin.Forms.Xaml;
 
 namespace RoadTripToNCR.Themes
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DarkTheme : ResourceDictionary
     {
         public DarkTheme()

@@ -10,9 +10,6 @@ using Xamarin.Forms.Xaml;
 
 namespace RoadTripToNCR.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-
-
     public partial class CustomShellPage : ContentPage
     {
         public static readonly BindableProperty TextProperty =

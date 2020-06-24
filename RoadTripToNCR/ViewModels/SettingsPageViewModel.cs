@@ -21,30 +21,38 @@ namespace RoadTripToNCR.ViewModels
         public SettingsPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             Title = "Settings";
-            var currentTheme = (App.Current.Resources.MergedDictionaries.ToList()).FirstOrDefault().ToString();
-            IsDarkModeOn = (currentTheme == "RoadTripToNCR.Themes.DarkTheme");
-            IsLightModeOn = (currentTheme == "RoadTripToNCR.Themes.LightTheme");
+            var currentTheme = Application.Current.Properties["Theme"].ToString();
+            IsDarkModeOn = (currentTheme == "Dark");
+            IsLightModeOn = (currentTheme == "Light");
             this._navigationService = navigationService;
         }
         public DelegateCommand<string> ChangeThemeCommand => new DelegateCommand<string>(ChangeTheme);
+        public DelegateCommand PopCommand => new DelegateCommand(Pop);
 
-      
-        private void ChangeTheme(string cmdParams)
+        private async void Pop()
+        {
+            await Shell.Current.Navigation.PopModalAsync();
+        }
+
+        private async void ChangeTheme(string cmdParams)
         {
             var mergedDictionaries = App.Current.Resources.MergedDictionaries;
             mergedDictionaries.Clear();
             if (cmdParams == "Light")
             {
                 mergedDictionaries.Add(new LightTheme());
+                Application.Current.Properties["Theme"] = "Light";
                 IsDarkModeOn = false;
                 IsLightModeOn = true;
             }
             else
             {
                 mergedDictionaries.Add(new DarkTheme());
+                Application.Current.Properties["Theme"] = "Dark";
                 IsDarkModeOn = true;
                 IsLightModeOn = false;
             }
+            await Application.Current.SavePropertiesAsync();
             RaisePropertyChanged();
         }
        

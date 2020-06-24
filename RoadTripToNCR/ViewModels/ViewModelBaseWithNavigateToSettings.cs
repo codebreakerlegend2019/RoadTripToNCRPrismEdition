@@ -1,10 +1,12 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
+using RoadTripToNCR.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace RoadTripToNCR.ViewModels
 {
@@ -21,7 +23,7 @@ namespace RoadTripToNCR.ViewModels
 
         private async void GoToSettings()
         {
-            await _navigationService.NavigateAsync("SettingsPage");
+            await Shell.Current.Navigation.PushModalAsync(new NavigationPage(new SettingsPage()));
         }
     }
 }

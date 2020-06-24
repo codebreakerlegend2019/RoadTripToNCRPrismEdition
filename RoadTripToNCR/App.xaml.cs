@@ -16,7 +16,6 @@ using Prism.Navigation;
 using System.Diagnostics;
 using RoadTripToNCR.Themes;
 
-[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace RoadTripToNCR
 {
     public partial class App
@@ -42,13 +41,11 @@ namespace RoadTripToNCR
                 "CarouselView_Experimental",
                 "RadioButton_Experimental",
                 "IndicatorView_Experimental",
+                "Shapes_Experimental"
             });
-            if (App.Current.Resources.Source.OriginalString == "Themes/DarkTheme.xaml")
-                App.Current.Resources.MergedDictionaries.Add(new DarkTheme());
-            else
-                App.Current.Resources.MergedDictionaries.Add(new LightTheme());
+            
             JdsClient.BaseAddress = ApiLink;
-            var result = await NavigationService.NavigateAsync("NavigationPage/PlacePage");
+            var result = await NavigationService.NavigateAsync("MainPage");
             if (!result.Success)
                 Debug.WriteLine(result.Exception.StackTrace);
         }

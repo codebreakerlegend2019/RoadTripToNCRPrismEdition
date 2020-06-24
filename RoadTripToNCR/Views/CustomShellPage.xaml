@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com"
     prism:ViewModelLocator.AutowireViewModel="True">
-    <NavigationPage.TitleView>
+    <Shell.TitleView>
         <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
             <Label
                 x:Name="TitleLabel"
@@ -22,7 +22,6 @@
                 VerticalOptions="Center"
                 VerticalTextAlignment="Center" />
             <Button
-                Visual="Default"
                 x:Name="SettingButton"
                 BackgroundColor="Transparent"
                 Command="{Binding GoToSettingsCommand}"
@@ -31,10 +30,11 @@
                 HorizontalOptions="EndAndExpand"
                 IsEnabled="True"
                 Text="{x:Static material:MaterialFonts.Cog}"
-                TextColor="{DynamicResource TitleTextColor}" />
+                TextColor="{DynamicResource TitleTextColor}"
+                Visual="Default" />
 
         </StackLayout>
 
-    </NavigationPage.TitleView>
+    </Shell.TitleView>
 
 </ContentPage>

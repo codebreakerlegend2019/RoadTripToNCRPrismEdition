@@ -6,7 +6,7 @@
     xmlns:prism="http://prismlibrary.com">
     <Application.Resources>
 
-        <ResourceDictionary Source="Themes/DarkTheme.xaml">
+        <ResourceDictionary Source="Themes/LightTheme.xaml">
             <OnPlatform x:Key="MaterialFontFamily" x:TypeArguments="x:String">
                 <On Platform="iOS" Value="Material Design Icons" />
                 <On Platform="Android" Value="materialdesignicons-webfont.ttf#Material Design Icons" />
@@ -18,9 +18,19 @@
                 <On Platform="UWP" Value="Assets/Fonts/materialdesignicons-webfont.ttf#Material Design Icons" />
             </OnPlatform>
 
+
+            <Style x:Key="ItemText" TargetType="Label">
+                <Setter Property="TextColor" Value="{DynamicResource TitleTextColor}" />
+                <Setter Property="FontFamily" Value="{StaticResource RobotoCondensed}" />
+                <Setter Property="FontSize" Value="Title" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="LineBreakMode" Value="WordWrap" />
+            </Style>
             <Style x:Key="ImageFrame" TargetType="Frame">
                 <Setter Property="Padding" Value="1" />
-                <Setter Property="BackgroundColor" Value="AliceBlue" />
+                <Setter Property="BackgroundColor" Value="{DynamicResource FrameBackgroundColor}" />
                 <Setter Property="CornerRadius" Value="20" />
             </Style>
             <Style x:Key="CollectionViewItemFrame" TargetType="Frame">
@@ -30,7 +40,7 @@
                             <VisualState x:Name="Normal" />
                             <VisualState x:Name="Selected">
                                 <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource FrameBackgroundColor}" />
+                                    <Setter Property="BackgroundColor" Value="{DynamicResource PageBackgroundColor}" />
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
@@ -44,7 +54,7 @@
                             <VisualState x:Name="Normal" />
                             <VisualState x:Name="Selected">
                                 <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource FrameBackgroundColor}" />
+                                    <Setter Property="BackgroundColor" Value="{DynamicResource PageBackgroundColor}" />
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
@@ -52,14 +62,14 @@
                 </Setter>
             </Style>
 
-                        <Style x:Key="CollectionViewItemGrid" TargetType="Grid">
+            <Style x:Key="CollectionViewItemGrid" TargetType="Grid">
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList>
                         <VisualStateGroup x:Name="CommonStates">
                             <VisualState x:Name="Normal" />
                             <VisualState x:Name="Selected">
                                 <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource FrameBackgroundColor}" />
+                                    <Setter Property="BackgroundColor" Value="{DynamicResource PageBackgroundColor}" />
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
@@ -67,9 +77,12 @@
                 </Setter>
             </Style>
 
+
+
+
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{DynamicResource NavigationBarColor}" />
-                <Setter Property="BarTextColor" Value="{StaticResource TitleTextColor}" />
+                <Setter Property="BarTextColor" Value="{DynamicResource TitleTextColor}" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

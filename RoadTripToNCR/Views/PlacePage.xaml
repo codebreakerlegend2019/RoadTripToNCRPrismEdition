@@ -11,9 +11,8 @@
     Title="{Binding Title}"
     prism:ViewModelLocator.AutowireViewModel="True"
     BackgroundColor="{DynamicResource PageBackgroundColor}"
-    NavigationPage.HasNavigationBar="True"
     IsSettingsButtonVisible="True"
-    Visual="Material">
+    NavigationPage.HasNavigationBar="True">
     <views:CustomShellPage.IconImageSource>
         <FontImageSource
             FontFamily="{DynamicResource MaterialFontFamily}"
@@ -23,12 +22,15 @@
     </views:CustomShellPage.IconImageSource>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30*" />
-            <RowDefinition Height="30*" />
+            <RowDefinition Height="15*" />
+            <RowDefinition Height="15*" />
             <RowDefinition Height="40*" />
             <RowDefinition Height="10*" />
         </Grid.RowDefinitions>
-        <StackLayout Grid.Row="0" Grid.Column="0">
+        <StackLayout
+            Grid.Row="0"
+            Grid.Column="0"
+            Padding="10">
             <StackLayout Margin="5,5,5,5" Orientation="Horizontal">
                 <Label
                     FontAttributes="Bold"
@@ -50,40 +52,66 @@
                     TextColor="{DynamicResource TitleTextColor}"
                     VerticalOptions="Start"
                     VerticalTextAlignment="Center" />
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="{StaticResource MaterialFontFamily}"
+                    FontSize="Title"
+                    HorizontalTextAlignment="Start"
+                    LineBreakMode="NoWrap"
+                    Text="{Binding SelectedCityText}"
+                    TextColor="{DynamicResource TitleTextColor}"
+                    VerticalOptions="Start"
+                    VerticalTextAlignment="Center" />
             </StackLayout>
             <CollectionView
+                HorizontalScrollBarVisibility="Always"
                 ItemSizingStrategy="MeasureAllItems"
                 ItemsSource="{Binding Cities}"
-                ItemsUpdatingScrollMode="KeepLastItemInView"
+                SelectedItem="{Binding SelectedCity}"
+                SelectionChangedCommand="{Binding CitySelectionChangedCommand}"
                 SelectionMode="Single">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout ItemSpacing="5" Orientation="Horizontal" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Style="{StaticResource CollectionViewItemStack}">
-                            <Frame
-                                BackgroundColor="{DynamicResource FrameBackgroundColor}"
-                                CornerRadius="40"
-                                HasShadow="True"
+                        <Grid
+                            ColumnDefinitions="Auto"
+                            RowDefinitions="Auto"
+                            Style="{StaticResource CollectionViewItemGrid}">
+                            <Path
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="0,0,0,0"
+                                Aspect="Fill"
+                                Data="M16.031983,0C19.836016,0 22.238036,3.9039392 25.642066,3.7029426 27.644083,3.3029487 28.345089,3.2029502 28.445089,3.7029426 28.044086,4.5039299 27.944085,5.6049126 29.045094,5.9059082 33.149131,7.1068892 32.849128,9.9098456 28.945094,12.111811 27.944085,13.212794 27.544082,14.313777 28.445089,15.715755 22.939042,15.815753 20.737023,14.11378 16.031983,14.11378 11.326943,14.11378 9.1249239,15.815753 3.5188761,15.715755 4.4198837,14.313777 4.0198803,13.112795 3.0188713,12.111811 -0.78516102,9.9098456 -1.1861649,7.1068892 2.9188709,5.9059082 4.0198803,5.6049126 3.919879,4.4039314 3.5188761,3.7029426 3.7188778,3.3029487 4.4198837,3.3029487 6.3218999,3.7029426 9.8259299,3.9039392 12.12795,0 16.031983,0z"
+                                Fill="{Binding SelectedColor, Mode=TwoWay}"
                                 HeightRequest="50"
+                                Stroke="{DynamicResource TitleTextColor}"
                                 WidthRequest="150">
-                                <Label
-                                    FontFamily="{StaticResource RobotoCondensed}"
-                                    FontSize="Title"
-                                    HorizontalTextAlignment="Center"
-                                    LineBreakMode="NoWrap"
-                                    Text="{Binding Name}"
-                                    TextColor="{DynamicResource TitleTextColor}"
-                                    VerticalOptions="Center"
-                                    VerticalTextAlignment="Center" />
-                            </Frame>
-                        </StackLayout>
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <TransformGroup.Children>
+                                            <RotateTransform Angle="0" />
+                                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                                        </TransformGroup.Children>
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Style="{StaticResource ItemText}"
+                                Text="{Binding Name}" />
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </StackLayout>
-        <StackLayout Grid.Row="1" Grid.Column="0">
+        <StackLayout
+            Grid.Row="1"
+            Grid.Column="0"
+            Padding="10">
             <StackLayout Margin="5,5,5,5" Orientation="Horizontal">
                 <Label
                     FontAttributes="Bold"
@@ -105,10 +133,22 @@
                     TextColor="{DynamicResource TitleTextColor}"
                     VerticalOptions="Start"
                     VerticalTextAlignment="Center" />
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="{StaticResource MaterialFontFamily}"
+                    FontSize="Title"
+                    HorizontalTextAlignment="Start"
+                    LineBreakMode="NoWrap"
+                    Text="{Binding SelectedCategoryText}"
+                    TextColor="{DynamicResource TitleTextColor}"
+                    VerticalOptions="Start"
+                    VerticalTextAlignment="Center" />
             </StackLayout>
             <CollectionView
                 ItemSizingStrategy="MeasureAllItems"
                 ItemsSource="{Binding Categories}"
+                SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
+                SelectionChangedCommand="{Binding CategorySelectionChangeCommand}"
                 SelectionMode="Single">
 
                 <CollectionView.ItemsLayout>
@@ -116,24 +156,32 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Style="{StaticResource CollectionViewItemStack}">
-                            <Frame
-                                BackgroundColor="{DynamicResource FrameBackgroundColor}"
-                                CornerRadius="40"
-                                HasShadow="True"
+                        <Grid ColumnDefinitions="Auto" RowDefinitions="Auto">
+                            <Path
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="0,0,0,0"
+                                Aspect="Fill"
+                                Data="M16.031983,0C19.836016,0 22.238036,3.9039392 25.642066,3.7029426 27.644083,3.3029487 28.345089,3.2029502 28.445089,3.7029426 28.044086,4.5039299 27.944085,5.6049126 29.045094,5.9059082 33.149131,7.1068892 32.849128,9.9098456 28.945094,12.111811 27.944085,13.212794 27.544082,14.313777 28.445089,15.715755 22.939042,15.815753 20.737023,14.11378 16.031983,14.11378 11.326943,14.11378 9.1249239,15.815753 3.5188761,15.715755 4.4198837,14.313777 4.0198803,13.112795 3.0188713,12.111811 -0.78516102,9.9098456 -1.1861649,7.1068892 2.9188709,5.9059082 4.0198803,5.6049126 3.919879,4.4039314 3.5188761,3.7029426 3.7188778,3.3029487 4.4198837,3.3029487 6.3218999,3.7029426 9.8259299,3.9039392 12.12795,0 16.031983,0z"
+                                Fill="{DynamicResource FrameBackgroundColor}"
                                 HeightRequest="50"
-                                WidthRequest="100">
-                                <Label
-                                    FontFamily="{StaticResource RobotoCondensed}"
-                                    FontSize="Title"
-                                    HorizontalTextAlignment="Center"
-                                    LineBreakMode="NoWrap"
-                                    Text="{Binding Name}"
-                                    TextColor="{DynamicResource TitleTextColor}"
-                                    VerticalOptions="Center"
-                                    VerticalTextAlignment="Center" />
-                            </Frame>
-                        </StackLayout>
+                                Stroke="{DynamicResource TitleTextColor}"
+                                WidthRequest="150">
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <TransformGroup.Children>
+                                            <RotateTransform Angle="0" />
+                                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                                        </TransformGroup.Children>
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Style="{StaticResource ItemText}"
+                                Text="{Binding Name}" />
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
@@ -171,49 +219,49 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Style="{StaticResource CollectionViewItemStack}">
-                               <Frame
-                            Padding="10"
-                            BackgroundColor="{DynamicResource FrameBackgroundColor}"
-                            CornerRadius="10"
-                            HasShadow="True"
-                            HeightRequest="200"
-                            Style="{StaticResource CollectionViewItemFrame}"
-                            WidthRequest="300">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="50*" />
-                                    <RowDefinition Height="20*" />
-                                    <RowDefinition Height="30*" />
-                                </Grid.RowDefinitions>
-                                <Image
-                                    Grid.Row="0"
-                                    HeightRequest="200"
-                                    Source="{Binding ImageUrl}"
-                                    WidthRequest="100" />
-                                <Label
-                                    Grid.Row="1"
-                                    FontAttributes="Bold"
-                                    FontFamily="{StaticResource RobotoCondensed}"
-                                    FontSize="Large"
-                                    HorizontalTextAlignment="Center"
-                                    LineBreakMode="WordWrap"
-                                    Text="{Binding Name}"
-                                    TextColor="{DynamicResource TitleTextColor}"
-                                    VerticalTextAlignment="Center" />
-                                <Button
-                                    Visual="Default"
-                                    Grid.Row="2"
-                                    BackgroundColor="Transparent"
-                                    Command="{Binding GoToSettingsCommand}"
-                                    FontFamily="{StaticResource MaterialFontFamily}"
-                                    FontSize="Title"
-                                    HorizontalOptions="Center"
-                                    IsEnabled="True"
-                                    Text="{x:Static material:MaterialFonts.Heart}"
-                                    TextColor="{DynamicResource TitleTextColor}" />
-                            </Grid>
+                            <Frame
+                                Padding="10"
+                                BackgroundColor="{DynamicResource FrameBackgroundColor}"
+                                CornerRadius="10"
+                                HasShadow="True"
+                                HeightRequest="200"
+                                Style="{StaticResource CollectionViewItemFrame}"
+                                WidthRequest="300">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50*" />
+                                        <RowDefinition Height="20*" />
+                                        <RowDefinition Height="30*" />
+                                    </Grid.RowDefinitions>
+                                    <Image
+                                        Grid.Row="0"
+                                        HeightRequest="200"
+                                        Source="{Binding ImageUrl}"
+                                        WidthRequest="100" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontAttributes="Bold"
+                                        FontFamily="{StaticResource RobotoCondensed}"
+                                        FontSize="Large"
+                                        HorizontalTextAlignment="Center"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding Name}"
+                                        TextColor="{DynamicResource TitleTextColor}"
+                                        VerticalTextAlignment="Center" />
+                                    <Button
+                                        Grid.Row="2"
+                                        BackgroundColor="Transparent"
+                                        Command="{Binding GoToSettingsCommand}"
+                                        FontFamily="{StaticResource MaterialFontFamily}"
+                                        FontSize="Title"
+                                        HorizontalOptions="Center"
+                                        IsEnabled="True"
+                                        Text="{x:Static material:MaterialFonts.Heart}"
+                                        TextColor="{DynamicResource TitleTextColor}"
+                                        Visual="Default" />
+                                </Grid>
 
-                        </Frame>
+                            </Frame>
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
