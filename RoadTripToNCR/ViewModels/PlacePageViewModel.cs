@@ -1,4 +1,6 @@
 ﻿using ImTools;
+using MonkeyCache.SQLite;
+using Plugin.Toast;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -13,6 +15,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace RoadTripToNCR.ViewModels
@@ -93,7 +96,30 @@ namespace RoadTripToNCR.ViewModels
             RaisePropertyChanged(nameof(SelectedCity));
         }
 
-   
+        private void LikeUnlike(Place placeSelected)
+        {
+
+            foreach (var place in _places)
+            {
+                if (place.Id == placeSelected.Id)
+                {
+                    if (!place.IsLiked)
+                    {
+                        CrossToastPopUp.Current.ShowToastMessage($"{place.Name} is added to Travel List");
+                        place.IsLiked = true;
+                    }
+
+                    else
+                    {
+                        CrossToastPopUp.Current.ShowToastMessage($"{place.Name} is removed to Travel List");
+                        place.IsLiked = false;
+                    }
+                    break;
+                }
+            }
+        }
+
+
         public DelegateCommand CitySelectionChangedCommand => new DelegateCommand(async() =>
         {
             if  (Places.Count > 0)
@@ -145,12 +171,35 @@ namespace RoadTripToNCR.ViewModels
         });
 
 
+        public DelegateCommand<Place> LikeUnlikeCommand => new DelegateCommand<Place>((Place place) =>
+        {
+            LikeUnlike(place);
+        });
+
+
         private async void LoadPlaces()
         {
-            var places = await _placeRepo.GetAllAsync();
-            _places = places;
-            Places = _places;
-            RaisePropertyChanged(nameof(Places));
+
+            try
+            {
+                var places = await _placeRepo.GetAllAsync();
+                var likedPlaces = Barrel.Current.Get<List<Place>>("TravelList");
+                foreach (var place in places)
+                {
+                    if (likedPlaces == null)
+                        break;
+                    var likedPlaceMatch = likedPlaces.FirstOrDefault(x => x.Id == place.Id);
+                    if (likedPlaceMatch != null)
+                        place.IsLiked = true;
+                }
+                _places = places;
+                Places = _places;
+                RaisePropertyChanged(nameof(Places));
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     
     }

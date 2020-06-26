@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace RoadTripToNCR.Models
 {
-    public class Place
+    public class Place:BindableBase
     {
         public int Id { get; set; }
         public string Type { get; set; }
@@ -18,6 +19,16 @@ namespace RoadTripToNCR.Models
         public string FileName { get; set; }
 
         public string ImageUrl => $"{App.ApiLinkImages}{FileName}";
-        public bool IsLiked { get; set; }
+        private bool _isLike;
+        public bool IsLiked
+        {
+            get => _isLike;
+            set
+            {
+                SetProperty(ref _isLike, value);
+                RaisePropertyChanged(nameof(LikedColor));
+            }
+        }
+        public string LikedColor => IsLiked ? "Red" : "Gray";
     }
 }

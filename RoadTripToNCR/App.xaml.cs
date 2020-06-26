@@ -15,6 +15,8 @@ using Prism.Navigation.Xaml;
 using Prism.Navigation;
 using System.Diagnostics;
 using RoadTripToNCR.Themes;
+using System.IO;
+using MonkeyCache.SQLite;
 
 namespace RoadTripToNCR
 {
@@ -35,6 +37,7 @@ namespace RoadTripToNCR
         protected override async void OnInitialized()
         {
             InitializeComponent();
+ 
             Device.SetFlags(new[]
           {
                 "SwipeView_Experimental",
@@ -50,6 +53,11 @@ namespace RoadTripToNCR
                 Debug.WriteLine(result.Exception.StackTrace);
         }
 
+        protected override void OnStart()
+        {
+            Barrel.Create(OfflineDatabasePath());
+            Barrel.ApplicationId = "LocalDb";
+        }
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
@@ -66,6 +74,13 @@ namespace RoadTripToNCR
         {
             base.ConfigureViewModelLocator();
             ViewModelLocationProvider.Register<CustomShellPage, CustomShellPageViewModel>();
+        }
+        private string OfflineDatabasePath()
+        {
+            if (Device.RuntimePlatform == Device.iOS)
+                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "..", "Library");
+
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
         }
     }
 }

@@ -27,6 +27,15 @@
                 <Setter Property="VerticalOptions" Value="Center" />
                 <Setter Property="LineBreakMode" Value="WordWrap" />
             </Style>
+            <Style x:Key="PlaceText" TargetType="Label">
+                <Setter Property="TextColor" Value="{DynamicResource TitleTextColor}" />
+                <Setter Property="FontFamily" Value="{StaticResource RobotoCondensed}" />
+                <Setter Property="FontSize" Value="Subtitle" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="LineBreakMode" Value="WordWrap" />
+            </Style>
             <Style x:Key="ImageFrame" TargetType="Frame">
                 <Setter Property="Padding" Value="1" />
                 <Setter Property="BackgroundColor" Value="{DynamicResource FrameBackgroundColor}" />
