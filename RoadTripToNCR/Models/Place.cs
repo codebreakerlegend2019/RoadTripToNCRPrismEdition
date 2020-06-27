@@ -1,6 +1,8 @@
 ﻿using Prism.Mvvm;
+using RoadTripToNCR.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace RoadTripToNCR.Models
@@ -29,6 +31,6 @@ namespace RoadTripToNCR.Models
                 RaisePropertyChanged(nameof(LikedColor));
             }
         }
-        public string LikedColor => IsLiked ? "Red" : "Gray";
+        public Color LikedColor => IsLiked ? UIHelper.GetLikeUnlikeColor(true) : UIHelper.GetLikeUnlikeColor(false);
     }
 }

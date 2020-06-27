@@ -19,6 +19,7 @@ namespace RoadTripToNCR.Droid
 
             base.OnCreate(savedInstanceState);
             CachedImageRenderer.Init(true);
+            Forms.SetFlags("AppTheme_Experimental");
             Forms.SetFlags("IndicatorView_Experimental");
             Forms.SetFlags("CollectionView_Experimental");
             Forms.SetFlags("UseLegacyRenderers");

@@ -1,6 +1,8 @@
 ﻿using Prism.Mvvm;
+using RoadTripToNCR.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace RoadTripToNCR.Models
@@ -19,6 +21,6 @@ namespace RoadTripToNCR.Models
                 RaisePropertyChanged(nameof(SelectedColor));
             }
         }
-        public string SelectedColor => (IsSelected) ? "#00ACC1" : "#80DEEA";
+        public Color SelectedColor => IsSelected ? UIHelper.GetFrameSelectedColor(true) : UIHelper.GetFrameSelectedColor(false);
     }
 }

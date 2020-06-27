@@ -23,7 +23,7 @@ namespace RoadTripToNCR.ViewModels
 
         private async void GoToSettings()
         {
-            await Shell.Current.Navigation.PushModalAsync(new NavigationPage(new SettingsPage()));
+            await Shell.Current.Navigation.PushAsync(new SettingsPage());
         }
     }
 }

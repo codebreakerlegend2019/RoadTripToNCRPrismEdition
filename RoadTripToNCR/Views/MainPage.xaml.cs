@@ -13,6 +13,8 @@ namespace RoadTripToNCR.Views
         public MainPage()
         {
             InitializeComponent();
+            Routing.RegisterRoute("SettingsPage", typeof(SettingsPage));
+
         }
 
     }

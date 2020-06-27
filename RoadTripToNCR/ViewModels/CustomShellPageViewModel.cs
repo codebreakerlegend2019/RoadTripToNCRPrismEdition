@@ -9,15 +9,7 @@ using System.Linq;
 
 namespace RoadTripToNCR.ViewModels
 {
-    public class CustomShellPageViewModel : ViewModelBase
+    public class CustomShellPageViewModel : BindableBase
     {
-        private readonly INavigationService _navigationService;
-        private DelegateCommand _goToSettingsCommand;
-
-        public CustomShellPageViewModel(INavigationService navigationService)
-            :base(navigationService)
-        {
-            this._navigationService = navigationService;
-        }
     }
 }

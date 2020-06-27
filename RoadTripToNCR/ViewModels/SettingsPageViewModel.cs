@@ -1,7 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
-using RoadTripToNCR.Themes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,7 +20,7 @@ namespace RoadTripToNCR.ViewModels
         public SettingsPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             Title = "Settings";
-            var currentTheme = Application.Current.Properties["Theme"].ToString();
+            var currentTheme = Application.Current.Properties["CurrentTheme"].ToString();
             IsDarkModeOn = (currentTheme == "Dark");
             IsLightModeOn = (currentTheme == "Light");
             this._navigationService = navigationService;
@@ -36,19 +35,17 @@ namespace RoadTripToNCR.ViewModels
 
         private async void ChangeTheme(string cmdParams)
         {
-            var mergedDictionaries = App.Current.Resources.MergedDictionaries;
-            mergedDictionaries.Clear();
             if (cmdParams == "Light")
             {
-                mergedDictionaries.Add(new LightTheme());
-                Application.Current.Properties["Theme"] = "Light";
-                IsDarkModeOn = false;
+                App.Current.UserAppTheme = OSAppTheme.Light;
+                App.Current.Properties["CurrentTheme"] = OSAppTheme.Light.ToString();
                 IsLightModeOn = true;
+                IsDarkModeOn = false;
             }
             else
             {
-                mergedDictionaries.Add(new DarkTheme());
-                Application.Current.Properties["Theme"] = "Dark";
+                App.Current.UserAppTheme = OSAppTheme.Dark;
+                App.Current.Properties["CurrentTheme"] = OSAppTheme.Dark.ToString();
                 IsDarkModeOn = true;
                 IsLightModeOn = false;
             }

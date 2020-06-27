@@ -5,21 +5,39 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com">
     <Application.Resources>
-
-        <ResourceDictionary Source="Themes/LightTheme.xaml">
+        <ResourceDictionary>
             <OnPlatform x:Key="MaterialFontFamily" x:TypeArguments="x:String">
                 <On Platform="iOS" Value="Material Design Icons" />
                 <On Platform="Android" Value="materialdesignicons-webfont.ttf#Material Design Icons" />
                 <On Platform="UWP" Value="Assets/Fonts/materialdesignicons-webfont.ttf#Material Design Icons" />
             </OnPlatform>
+
+            <Color x:Key="Dark_PageBackgroundColor">#282729</Color>
+            <Color x:Key="Dark_FrameBackgroundColor">#616161</Color>
+            <Color x:Key="Dark_FrameSelectedColor">#00ACC1</Color>
+            <Color x:Key="Dark_NavigationBarColor">#282729</Color>
+            <Color x:Key="Dark_TitleTextColor">White</Color>
+            <Color x:Key="Dark_TabbedSelectedColor">#FEFDFE</Color>
+            <Color x:Key="Dark_TabbedUnSelectedColor">#8F8E90</Color>
+
+            <Color x:Key="Light_PageBackgroundColor">#FFFEFF</Color>
+            <Color x:Key="Light_FrameSelectedColor">#00ACC1</Color>
+            <Color x:Key="Light_FrameBackgroundColor">#80DEEA</Color>
+            <Color x:Key="Light_NavigationBarColor">#F5F5F5</Color>
+            <Color x:Key="Light_TitleTextColor">#292829</Color>
+            <Color x:Key="Light_TabbedSelectedColor">#FF0000</Color>
+            <Color x:Key="Light_TabbedUnSelectedColor">#939293</Color>
+
             <OnPlatform x:Key="RobotoCondensed" x:TypeArguments="x:String">
                 <On Platform="iOS" Value="Material Design Icons" />
                 <On Platform="Android" Value="Roboto-BoldCondensed.ttf#Roboto BoldCondensed" />
                 <On Platform="UWP" Value="Assets/Fonts/materialdesignicons-webfont.ttf#Material Design Icons" />
             </OnPlatform>
 
+
+
             <Style x:Key="ItemText" TargetType="Label">
-                <Setter Property="TextColor" Value="{DynamicResource TitleTextColor}" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor}, Light={StaticResource Light_TitleTextColor}}" />
                 <Setter Property="FontFamily" Value="{StaticResource RobotoCondensed}" />
                 <Setter Property="FontSize" Value="Title" />
                 <Setter Property="HorizontalTextAlignment" Value="Center" />
@@ -28,47 +46,15 @@
                 <Setter Property="LineBreakMode" Value="WordWrap" />
             </Style>
             <Style x:Key="PlaceText" TargetType="Label">
-                <Setter Property="TextColor" Value="{DynamicResource TitleTextColor}" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor}, Light={StaticResource Light_TitleTextColor}}" />
                 <Setter Property="FontFamily" Value="{StaticResource RobotoCondensed}" />
-                <Setter Property="FontSize" Value="Subtitle" />
+                <Setter Property="FontSize" Value="Title" />
                 <Setter Property="HorizontalTextAlignment" Value="Center" />
                 <Setter Property="VerticalTextAlignment" Value="Center" />
                 <Setter Property="VerticalOptions" Value="Center" />
                 <Setter Property="LineBreakMode" Value="WordWrap" />
             </Style>
-            <Style x:Key="ImageFrame" TargetType="Frame">
-                <Setter Property="Padding" Value="1" />
-                <Setter Property="BackgroundColor" Value="{DynamicResource FrameBackgroundColor}" />
-                <Setter Property="CornerRadius" Value="20" />
-            </Style>
-            <Style x:Key="CollectionViewItemFrame" TargetType="Frame">
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal" />
-                            <VisualState x:Name="Selected">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource PageBackgroundColor}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
-            <Style x:Key="CollectionViewItemStack" TargetType="StackLayout">
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal" />
-                            <VisualState x:Name="Selected">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource PageBackgroundColor}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
+
 
             <Style x:Key="CollectionViewItemGrid" TargetType="Grid">
                 <Setter Property="VisualStateManager.VisualStateGroups">
@@ -77,7 +63,7 @@
                             <VisualState x:Name="Normal" />
                             <VisualState x:Name="Selected">
                                 <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource PageBackgroundColor}" />
+                                    <Setter Property="BackgroundColor" Value="{AppThemeBinding Dark={StaticResource Dark_PageBackgroundColor}, Light={StaticResource Light_PageBackgroundColor}}" />
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
@@ -88,10 +74,6 @@
 
 
 
-            <Style TargetType="NavigationPage">
-                <Setter Property="BarBackgroundColor" Value="{DynamicResource NavigationBarColor}" />
-                <Setter Property="BarTextColor" Value="{DynamicResource TitleTextColor}" />
-            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>

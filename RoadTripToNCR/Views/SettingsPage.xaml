@@ -1,26 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<views:CustomShellPage
     x:Class="RoadTripToNCR.Views.SettingsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:RoadTripToNCR.Helpers.Behavior;assembly=RoadTripToNCR"
     xmlns:material="clr-namespace:RoadTripToNCR.Helpers"
     xmlns:prism="http://prismlibrary.com"
     xmlns:views="clr-namespace:RoadTripToNCR.Views"
     Title="{Binding Title}"
     prism:ViewModelLocator.AutowireViewModel="True"
-    BackgroundColor="{DynamicResource PageBackgroundColor}">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding PopCommand}">
-            <ToolbarItem.IconImageSource>
-                <FontImageSource
-                    FontFamily="{DynamicResource MaterialFontFamily}"
-                    Glyph="{x:Static material:MaterialFonts.Close}"
-                    Size="44"
-                    Color="{DynamicResource TitleTextColor}" />
-            </ToolbarItem.IconImageSource>
-        </ToolbarItem>
-    </ContentPage.ToolbarItems>
+    BackgroundColor="{AppThemeBinding Dark={StaticResource Dark_PageBackgroundColor},
+                                      Light={StaticResource Light_PageBackgroundColor}}"
+    IsSettingsButtonVisible="False"
+    Shell.NavBarIsVisible="True"
+    Shell.TabBarIsVisible="False">
 
     <StackLayout>
         <StackLayout
@@ -31,19 +23,22 @@
                 FontSize="Title"
                 HorizontalOptions="StartAndExpand"
                 Text="Select Themes"
-                TextColor="{DynamicResource TitleTextColor}" />
+                TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                            Light={StaticResource Light_TitleTextColor}}" />
             <RadioButton
                 Command="{Binding ChangeThemeCommand}"
                 CommandParameter="Light"
                 IsChecked="{Binding IsLightModeOn}"
                 Text="Light"
-                TextColor="{DynamicResource TitleTextColor}" />
+                TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                            Light={StaticResource Light_TitleTextColor}}" />
             <RadioButton
                 Command="{Binding ChangeThemeCommand}"
                 CommandParameter="Dark"
                 IsChecked="{Binding IsDarkModeOn}"
                 Text="Dark"
-                TextColor="{DynamicResource TitleTextColor}" />
+                TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                            Light={StaticResource Light_TitleTextColor}}" />
         </StackLayout>
     </StackLayout>
-</ContentPage>
+</views:CustomShellPage>

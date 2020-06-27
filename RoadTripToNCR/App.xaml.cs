@@ -14,7 +14,6 @@ using ImTools;
 using Prism.Navigation.Xaml;
 using Prism.Navigation;
 using System.Diagnostics;
-using RoadTripToNCR.Themes;
 using System.IO;
 using MonkeyCache.SQLite;
 
@@ -37,20 +36,37 @@ namespace RoadTripToNCR
         protected override async void OnInitialized()
         {
             InitializeComponent();
- 
+
             Device.SetFlags(new[]
-          {
+            {
                 "SwipeView_Experimental",
                 "CarouselView_Experimental",
                 "RadioButton_Experimental",
                 "IndicatorView_Experimental",
-                "Shapes_Experimental"
+                "Shapes_Experimental",
+                "AppTheme_Experimental"
             });
-            
+            AppThemeConfiguration();
+
             JdsClient.BaseAddress = ApiLink;
             var result = await NavigationService.NavigateAsync("MainPage");
             if (!result.Success)
                 Debug.WriteLine(result.Exception.StackTrace);
+        }
+
+        private static void AppThemeConfiguration()
+        {
+            var isKeyExisted = App.Current.Properties.ContainsKey("CurrentTheme");
+            if (!isKeyExisted)
+                App.Current.Properties["CurrentTheme"] = OSAppTheme.Light.ToString();
+            else
+            {
+                var cacheTheme = App.Current.Properties["CurrentTheme"].ToString();
+                if (cacheTheme == "Light")
+                    App.Current.UserAppTheme = OSAppTheme.Light;
+                else
+                    App.Current.UserAppTheme = OSAppTheme.Dark;
+            }
         }
 
         protected override void OnStart()

@@ -18,7 +18,8 @@
                 HorizontalOptions="StartAndExpand"
                 HorizontalTextAlignment="Start"
                 LineBreakMode="NoWrap"
-                TextColor="{DynamicResource TitleTextColor}"
+                TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                            Light={StaticResource Light_TitleTextColor}}"
                 VerticalOptions="Center"
                 VerticalTextAlignment="Center" />
             <Button
@@ -30,11 +31,13 @@
                 HorizontalOptions="EndAndExpand"
                 IsEnabled="True"
                 Text="{x:Static material:MaterialFonts.Cog}"
-                TextColor="{DynamicResource TitleTextColor}"
+                TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                            Light={StaticResource Light_TitleTextColor}}"
                 Visual="Default" />
 
         </StackLayout>
 
     </Shell.TitleView>
+
 
 </ContentPage>

@@ -10,9 +10,15 @@
     xmlns:views="clr-namespace:RoadTripToNCR.Views"
     Title="{Binding Title}"
     prism:ViewModelLocator.AutowireViewModel="True"
-    BackgroundColor="{DynamicResource PageBackgroundColor}"
+    BackgroundColor="{AppThemeBinding Dark={StaticResource Dark_PageBackgroundColor},
+                                      Light={StaticResource Light_PageBackgroundColor}}"
     IsSettingsButtonVisible="True"
     NavigationPage.HasNavigationBar="True">
+    <views:CustomShellPage.Behaviors>
+        <prism:EventToCommandBehavior Command="{Binding PageAppearingCommand}" EventName="Appearing" />
+
+
+    </views:CustomShellPage.Behaviors>
     <views:CustomShellPage.IconImageSource>
         <FontImageSource
             FontFamily="{DynamicResource MaterialFontFamily}"
@@ -20,7 +26,9 @@
             Size="44"
             Color="{DynamicResource TitleTextColor}" />
     </views:CustomShellPage.IconImageSource>
+
     <Grid RowDefinitions="20*,20*,50*">
+
         <StackLayout
             Grid.Row="0"
             Grid.Column="0"
@@ -28,68 +36,77 @@
             <StackLayout Margin="5,5,5,5" Orientation="Horizontal">
                 <Label
                     FontAttributes="Bold"
-                    FontFamily="{StaticResource RobotoCondensed}"
-                    FontSize="Title"
-                    HorizontalTextAlignment="Start"
-                    LineBreakMode="NoWrap"
-                    Text="Cities"
-                    TextColor="{DynamicResource TitleTextColor}"
-                    VerticalOptions="Start"
-                    VerticalTextAlignment="Center" />
-                <Label
-                    FontAttributes="Bold"
                     FontFamily="{StaticResource MaterialFontFamily}"
                     FontSize="Title"
                     HorizontalTextAlignment="Start"
                     LineBreakMode="NoWrap"
                     Text="{x:Static material:MaterialFonts.City}"
-                    TextColor="{DynamicResource TitleTextColor}"
+                    TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                Light={StaticResource Light_TitleTextColor}}"
+                    VerticalOptions="Start"
+                    VerticalTextAlignment="Center" />
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="{StaticResource RobotoCondensed}"
+                    FontSize="Title"
+                    HorizontalTextAlignment="Start"
+                    LineBreakMode="NoWrap"
+                    Text="Cities"
+                    TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                Light={StaticResource Light_TitleTextColor}}"
                     VerticalOptions="Start"
                     VerticalTextAlignment="Center" />
             </StackLayout>
-            <CollectionView
-                ItemSizingStrategy="MeasureAllItems"
-                ItemsSource="{Binding Cities}"
-                SelectedItem="{Binding SelectedCity}"
-                SelectionChangedCommand="{Binding CitySelectionChangedCommand}"
-                SelectionMode="Single">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout ItemSpacing="5" Orientation="Horizontal" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid
-                            ColumnDefinitions="Auto"
-                            RowDefinitions="Auto"
-                            Style="{StaticResource CollectionViewItemGrid}">
-                            <Path
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                Margin="0,0,0,0"
-                                Aspect="Fill"
-                                Data="M16.031983,0C19.836016,0 22.238036,3.9039392 25.642066,3.7029426 27.644083,3.3029487 28.345089,3.2029502 28.445089,3.7029426 28.044086,4.5039299 27.944085,5.6049126 29.045094,5.9059082 33.149131,7.1068892 32.849128,9.9098456 28.945094,12.111811 27.944085,13.212794 27.544082,14.313777 28.445089,15.715755 22.939042,15.815753 20.737023,14.11378 16.031983,14.11378 11.326943,14.11378 9.1249239,15.815753 3.5188761,15.715755 4.4198837,14.313777 4.0198803,13.112795 3.0188713,12.111811 -0.78516102,9.9098456 -1.1861649,7.1068892 2.9188709,5.9059082 4.0198803,5.6049126 3.919879,4.4039314 3.5188761,3.7029426 3.7188778,3.3029487 4.4198837,3.3029487 6.3218999,3.7029426 9.8259299,3.9039392 12.12795,0 16.031983,0z"
-                                Fill="{Binding SelectedColor}"
-                                HeightRequest="50"
-                                Stroke="{DynamicResource TitleTextColor}"
-                                WidthRequest="150">
-                                <Path.RenderTransform>
-                                    <TransformGroup>
-                                        <TransformGroup.Children>
-                                            <RotateTransform Angle="0" />
-                                            <ScaleTransform ScaleX="1" ScaleY="1" />
-                                        </TransformGroup.Children>
-                                    </TransformGroup>
-                                </Path.RenderTransform>
-                            </Path>
-                            <Label
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                Style="{StaticResource ItemText}"
-                                Text="{Binding Name}" />
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            <RefreshView
+                Command="{Binding ReloadCommand}"
+                IsEnabled="True"
+                IsRefreshing="{Binding IsRefreshing}">
+                <CollectionView
+                    ItemSizingStrategy="MeasureAllItems"
+                    ItemsSource="{Binding Cities}"
+                    SelectedItem="{Binding SelectedCity}"
+                    SelectionChangedCommand="{Binding CitySelectionChangedCommand}"
+                    SelectionMode="Single">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="5" Orientation="Horizontal" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid
+                                ColumnDefinitions="Auto"
+                                RowDefinitions="Auto"
+                                Style="{StaticResource CollectionViewItemGrid}">
+                                <Path
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Margin="0,0,0,0"
+                                    Aspect="Fill"
+                                    Data="M16.031983,0C19.836016,0 22.238036,3.9039392 25.642066,3.7029426 27.644083,3.3029487 28.345089,3.2029502 28.445089,3.7029426 28.044086,4.5039299 27.944085,5.6049126 29.045094,5.9059082 33.149131,7.1068892 32.849128,9.9098456 28.945094,12.111811 27.944085,13.212794 27.544082,14.313777 28.445089,15.715755 22.939042,15.815753 20.737023,14.11378 16.031983,14.11378 11.326943,14.11378 9.1249239,15.815753 3.5188761,15.715755 4.4198837,14.313777 4.0198803,13.112795 3.0188713,12.111811 -0.78516102,9.9098456 -1.1861649,7.1068892 2.9188709,5.9059082 4.0198803,5.6049126 3.919879,4.4039314 3.5188761,3.7029426 3.7188778,3.3029487 4.4198837,3.3029487 6.3218999,3.7029426 9.8259299,3.9039392 12.12795,0 16.031983,0z"
+                                    Fill="{Binding SelectedColor}"
+                                    HeightRequest="50"
+                                    Stroke="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                             Light={StaticResource Light_TitleTextColor}}"
+                                    WidthRequest="150">
+                                    <Path.RenderTransform>
+                                        <TransformGroup>
+                                            <TransformGroup.Children>
+                                                <RotateTransform Angle="0" />
+                                                <ScaleTransform ScaleX="1" ScaleY="1" />
+                                            </TransformGroup.Children>
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                </Path>
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Style="{StaticResource ItemText}"
+                                    Text="{Binding Name}" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+
         </StackLayout>
         <StackLayout
             Grid.Row="1"
@@ -98,29 +115,31 @@
             <StackLayout Margin="5,5,5,5" Orientation="Horizontal">
                 <Label
                     FontAttributes="Bold"
-                    FontFamily="{StaticResource RobotoCondensed}"
-                    FontSize="Title"
-                    HorizontalTextAlignment="Start"
-                    LineBreakMode="NoWrap"
-                    Text="Categories"
-                    TextColor="{DynamicResource TitleTextColor}"
-                    VerticalOptions="Start"
-                    VerticalTextAlignment="Center" />
-                <Label
-                    FontAttributes="Bold"
                     FontFamily="{StaticResource MaterialFontFamily}"
                     FontSize="Title"
                     HorizontalTextAlignment="Start"
                     LineBreakMode="NoWrap"
                     Text="{x:Static material:MaterialFonts.SortReverseVariant}"
-                    TextColor="{DynamicResource TitleTextColor}"
+                    TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                Light={StaticResource Light_TitleTextColor}}"
+                    VerticalOptions="Start"
+                    VerticalTextAlignment="Center" />
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="{StaticResource RobotoCondensed}"
+                    FontSize="Title"
+                    HorizontalTextAlignment="Start"
+                    LineBreakMode="NoWrap"
+                    Text="Categories"
+                    TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                Light={StaticResource Light_TitleTextColor}}"
                     VerticalOptions="Start"
                     VerticalTextAlignment="Center" />
             </StackLayout>
             <CollectionView
                 ItemSizingStrategy="MeasureAllItems"
                 ItemsSource="{Binding Categories}"
-                SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
+                SelectedItem="{Binding SelectedCategory}"
                 SelectionChangedCommand="{Binding CategorySelectionChangeCommand}"
                 SelectionMode="Single">
 
@@ -141,7 +160,8 @@
                                 Data="M16.031983,0C19.836016,0 22.238036,3.9039392 25.642066,3.7029426 27.644083,3.3029487 28.345089,3.2029502 28.445089,3.7029426 28.044086,4.5039299 27.944085,5.6049126 29.045094,5.9059082 33.149131,7.1068892 32.849128,9.9098456 28.945094,12.111811 27.944085,13.212794 27.544082,14.313777 28.445089,15.715755 22.939042,15.815753 20.737023,14.11378 16.031983,14.11378 11.326943,14.11378 9.1249239,15.815753 3.5188761,15.715755 4.4198837,14.313777 4.0198803,13.112795 3.0188713,12.111811 -0.78516102,9.9098456 -1.1861649,7.1068892 2.9188709,5.9059082 4.0198803,5.6049126 3.919879,4.4039314 3.5188761,3.7029426 3.7188778,3.3029487 4.4198837,3.3029487 6.3218999,3.7029426 9.8259299,3.9039392 12.12795,0 16.031983,0z"
                                 Fill="{Binding SelectedColor}"
                                 HeightRequest="50"
-                                Stroke="{DynamicResource TitleTextColor}"
+                                Stroke="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                         Light={StaticResource Light_TitleTextColor}}"
                                 WidthRequest="150">
                                 <Path.RenderTransform>
                                     <TransformGroup>
@@ -169,22 +189,24 @@
             <StackLayout Margin="5,5,5,5" Orientation="Horizontal">
                 <Label
                     FontAttributes="Bold"
-                    FontFamily="{StaticResource RobotoCondensed}"
-                    FontSize="Title"
-                    HorizontalTextAlignment="Start"
-                    LineBreakMode="NoWrap"
-                    Text="Destinations"
-                    TextColor="{DynamicResource TitleTextColor}"
-                    VerticalOptions="Start"
-                    VerticalTextAlignment="Center" />
-                <Label
-                    FontAttributes="Bold"
                     FontFamily="{StaticResource MaterialFontFamily}"
                     FontSize="Title"
                     HorizontalTextAlignment="Start"
                     LineBreakMode="NoWrap"
                     Text="{x:Static material:MaterialFonts.MapMarkerRadius}"
-                    TextColor="{DynamicResource TitleTextColor}"
+                    TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                Light={StaticResource Light_TitleTextColor}}"
+                    VerticalOptions="Start"
+                    VerticalTextAlignment="Center" />
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="{StaticResource RobotoCondensed}"
+                    FontSize="Title"
+                    HorizontalTextAlignment="Start"
+                    LineBreakMode="NoWrap"
+                    Text="Destinations"
+                    TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                Light={StaticResource Light_TitleTextColor}}"
                     VerticalOptions="Start"
                     VerticalTextAlignment="Center" />
             </StackLayout>
@@ -198,24 +220,61 @@
                         Orientation="Horizontal"
                         SnapPointsType="MandatorySingle" />
                 </CollectionView.ItemsLayout>
+                <CollectionView.EmptyView>
+                    <StackLayout>
+                        <Label
+                            FontFamily="{StaticResource RobotoCondensed}"
+                            FontSize="Subtitle"
+                            HorizontalOptions="CenterAndExpand"
+                            IsVisible="{Binding IsPlacesLoaded}"
+                            TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                        Light={StaticResource Light_TitleTextColor}}"
+                            VerticalOptions="CenterAndExpand">
+                            <Label.Text>
+                                <MultiBinding StringFormat="No {0} Found In {1}">
+                                    <Binding Path="SelectedCategory.Name" />
+                                    <Binding Path="SelectedCity.Name" />
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+                        <Label
+                            FontFamily="{StaticResource RobotoCondensed}"
+                            FontSize="Subtitle"
+                            HorizontalOptions="CenterAndExpand"
+                            IsVisible="{Binding IsPlaceStillLoading}"
+                            Text="Loading Destinations...."
+                            TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                        Light={StaticResource Light_TitleTextColor}}"
+                            VerticalOptions="CenterAndExpand" />
+                        <Label
+                            FontFamily="{StaticResource RobotoCondensed}"
+                            FontSize="Subtitle"
+                            HorizontalOptions="CenterAndExpand"
+                            IsVisible="{Binding IsNoPlaces}"
+                            Text="No Places Loaded"
+                            TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                        Light={StaticResource Light_TitleTextColor}}"
+                            VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+
+                </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Grid
                             ColumnDefinitions="Auto"
                             RowDefinitions="Auto,Auto,Auto"
                             Style="{StaticResource CollectionViewItemGrid}">
-
-
                             <Path
                                 Grid.Row="0"
                                 Margin="0,0,0,0"
                                 Aspect="Fill"
                                 Data="M3.6000366,0L28.400024,0C30.400024,0,32,1.6000366,32,3.6000366L32,28.400024C32,30.400024,30.400024,32,28.400024,32L3.6000366,32C1.6000366,32,0,30.400024,0,28.400024L0,3.6000366C0,1.6000366,1.6000366,0,3.6000366,0z"
-                                Fill="{DynamicResource FrameBackgroundColor}"
+                                Fill="{AppThemeBinding Dark={StaticResource Dark_FrameBackgroundColor},
+                                                       Light={StaticResource Light_FrameBackgroundColor}}"
                                 HeightRequest="275"
-                                Stroke="Black"
+                                Stroke="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                         Light={StaticResource Light_TitleTextColor}}"
                                 WidthRequest="350" />
-
                             <StackLayout Grid.Row="0" Padding="10">
                                 <forms:CachedImage
                                     Aspect="AspectFill"
@@ -224,13 +283,13 @@
                                     ErrorPlaceholder="ic_defaultavatar.png"
                                     HeightRequest="150"
                                     HorizontalOptions="Center"
+                                    LoadingDelay="0"
                                     LoadingPlaceholder="ic_imageloader.gif"
                                     RetryCount="3"
                                     RetryDelay="5"
                                     Source="{Binding ImageUrl}"
                                     VerticalOptions="Center"
                                     WidthRequest="150">
-
                                     <forms:CachedImage.Transformations>
                                         <ffTransformations:RoundedTransformation
                                             BorderHexColor="#FFFFFF"
@@ -243,24 +302,43 @@
                                     Text="{Binding Name}"
                                     WidthRequest="250" />
                             </StackLayout>
-                            <Label
+                            <ImageButton
                                 Padding="10,10,10,0"
-                                FontFamily="{StaticResource MaterialFontFamily}"
-                                FontSize="50"
+                                BackgroundColor="Transparent"
+                                BorderWidth="5"
+                                Command="{Binding BindingContext.LikeUnlikeCommand, Source={x:Reference PlacesCollectionView}}"
+                                CommandParameter="{Binding .}"
                                 HorizontalOptions="End"
-                                Text="{x:Static material:MaterialFonts.Heart}"
-                                TextColor="{Binding LikedColor}"
-                                VerticalOptions="Start">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer
-                                        Command="{Binding BindingContext.LikeUnlikeCommand, Source={x:Reference PlacesCollectionView}}"
-                                        CommandParameter="{Binding .}"
-                                        NumberOfTapsRequired="1" />
-                                </Label.GestureRecognizers>
-                            </Label>
+                                VerticalOptions="Start"
+                                Visual="Material">
+                                <ImageButton.Source>
+                                    <FontImageSource
+                                        FontFamily="{DynamicResource MaterialFontFamily}"
+                                        Glyph="{x:Static material:MaterialFonts.Heart}"
+                                        Size="50"
+                                        Color="{Binding LikedColor}" />
+                                </ImageButton.Source>
 
+                            </ImageButton>
+                            <ImageButton
+                                Padding="10,10,10,0"
+                                BackgroundColor="Transparent"
+                                BorderWidth="5"
+                                Command="{Binding BindingContext.NavigateDestinationCommand, Source={x:Reference PlacesCollectionView}}"
+                                CommandParameter="{Binding .}"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Start"
+                                Visual="Material">
+                                <ImageButton.Source>
+                                    <FontImageSource
+                                        FontFamily="{DynamicResource MaterialFontFamily}"
+                                        Glyph="{x:Static material:MaterialFonts.Map}"
+                                        Size="50"
+                                        Color="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                                Light={StaticResource Light_TitleTextColor}}" />
+                                </ImageButton.Source>
 
-
+                            </ImageButton>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
