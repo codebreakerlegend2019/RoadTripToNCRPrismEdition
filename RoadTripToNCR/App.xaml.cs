@@ -16,6 +16,7 @@ using Prism.Navigation;
 using System.Diagnostics;
 using System.IO;
 using MonkeyCache.SQLite;
+using System.Threading.Tasks;
 
 namespace RoadTripToNCR
 {
@@ -36,7 +37,7 @@ namespace RoadTripToNCR
         protected override async void OnInitialized()
         {
             InitializeComponent();
-
+            await NavigationService.NavigateAsync("MainPage");
             Device.SetFlags(new[]
             {
                 "SwipeView_Experimental",
@@ -49,9 +50,7 @@ namespace RoadTripToNCR
             AppThemeConfiguration();
 
             JdsClient.BaseAddress = ApiLink;
-            var result = await NavigationService.NavigateAsync("MainPage");
-            if (!result.Success)
-                Debug.WriteLine(result.Exception.StackTrace);
+      
         }
 
         private static void AppThemeConfiguration()
@@ -83,14 +82,9 @@ namespace RoadTripToNCR
             containerRegistry.AutoRegisterByInterFaceName("IGetAll");
             containerRegistry.AutoRegisterByInterFaceName("IGetAllAsync");
             containerRegistry.RegisterForNavigation<SettingsPage, SettingsPageViewModel>();
-            containerRegistry.RegisterForNavigation<CustomShellPage>();
+            containerRegistry.RegisterForNavigation<CustomShellPage,CustomShellPageViewModel>();
         }
 
-        protected override void ConfigureViewModelLocator()
-        {
-            base.ConfigureViewModelLocator();
-            ViewModelLocationProvider.Register<CustomShellPage, CustomShellPageViewModel>();
-        }
         private string OfflineDatabasePath()
         {
             if (Device.RuntimePlatform == Device.iOS)

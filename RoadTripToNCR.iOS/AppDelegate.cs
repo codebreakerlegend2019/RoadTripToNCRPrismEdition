@@ -26,11 +26,7 @@ namespace RoadTripToNCR.iOS
 
             CachedImageRenderer.Init();
             Rg.Plugins.Popup.Popup.Init();
-            Forms.SetFlags("IndicatorView_Experimental");
-            Forms.SetFlags("CollectionView_Experimental");
-            Forms.SetFlags("UseLegacyRenderers");
             global::Xamarin.Forms.Forms.Init();
-            Forms.SetFlags("RadioButton_Experimental");
             global::Xamarin.Forms.FormsMaterial.Init();
             AnimationViewRenderer.Init();
             LoadApplication(new App(new iOSInitializer()));

@@ -30,7 +30,7 @@
         <Tab Title="Places">
             <Tab.Icon>
                 <FontImageSource
-                    FontFamily="{DynamicResource MaterialFontFamily}"
+                    FontFamily="MaterialFontFamily"
                     Glyph="{x:Static material:MaterialFonts.WalletTravel}"
                     Size="44"
                     Color="{DynamicResource TitleTextColor}" />
@@ -42,7 +42,7 @@
         <Tab Title="Travel List">
             <Tab.Icon>
                 <FontImageSource
-                    FontFamily="{DynamicResource MaterialFontFamily}"
+                    FontFamily="MaterialFontFamily"
                     Glyph="{x:Static material:MaterialFonts.Island}"
                     Size="44"
                     Color="{DynamicResource TitleTextColor}" />
