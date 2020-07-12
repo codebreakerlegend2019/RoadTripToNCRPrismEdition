@@ -14,6 +14,8 @@ namespace RoadTripToNCR.Views
         {
             InitializeComponent();
             Routing.RegisterRoute("SettingsPage", typeof(SettingsPage));
+            Routing.RegisterRoute("PlaceDetailPage", typeof(PlaceDetailPage));
+            Routing.RegisterRoute("PlacePage", typeof(PlacePage));
 
         }
 

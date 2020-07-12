@@ -34,10 +34,9 @@ namespace RoadTripToNCR
 
         public App(IPlatformInitializer initializer) : base(initializer) { }
 
-        protected override async void OnInitialized()
+        protected override void OnInitialized()
         {
             InitializeComponent();
-            await NavigationService.NavigateAsync("MainPage");
             Device.SetFlags(new[]
             {
                 "SwipeView_Experimental",
@@ -48,9 +47,9 @@ namespace RoadTripToNCR
                 "AppTheme_Experimental"
             });
             AppThemeConfiguration();
-
             JdsClient.BaseAddress = ApiLink;
-      
+            MainPage = new MainPage();
+
         }
 
         private static void AppThemeConfiguration()
@@ -83,6 +82,7 @@ namespace RoadTripToNCR
             containerRegistry.AutoRegisterByInterFaceName("IGetAllAsync");
             containerRegistry.RegisterForNavigation<SettingsPage, SettingsPageViewModel>();
             containerRegistry.RegisterForNavigation<CustomShellPage,CustomShellPageViewModel>();
+            containerRegistry.RegisterForNavigation<PlaceDetailPage, PlaceDetailPageViewModel>();
         }
 
         private string OfflineDatabasePath()

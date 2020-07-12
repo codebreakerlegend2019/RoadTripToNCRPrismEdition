@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="RoadTripToNCR.Views.PlaceDetailPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:material="clr-namespace:RoadTripToNCR.Helpers"
+    xmlns:prism="http://prismlibrary.com"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+    <Grid RowDefinitions="1.2*,2*,Auto">
+        <forms:CachedImage
+            Aspect="AspectFill"
+            BitmapOptimizations="False"
+            DownsampleToViewSize="True"
+            ErrorPlaceholder="ic_defaultavatar.png"
+            HorizontalOptions="FillAndExpand"
+            LoadingDelay="0"
+            LoadingPlaceholder="ic_imageloader.gif"
+            Opacity="100"
+            RetryCount="3"
+            RetryDelay="0"
+            Source="{Binding SelectedPlace.ImageUrl}"
+            VerticalOptions="FillAndExpand" />
+        <ImageButton
+            Padding="10,10,10,0"
+            BackgroundColor="Transparent"
+            BorderWidth="5"
+            Command="{Binding GoBackCommand}"
+            HorizontalOptions="Start"
+            VerticalOptions="Start"
+            Visual="Material">
+            <ImageButton.Source>
+                <FontImageSource
+                    FontFamily="MaterialFontFamily"
+                    Glyph="{x:Static material:MaterialFonts.ArrowLeft}"
+                    Size="30"
+                    Color="White" />
+            </ImageButton.Source>
+
+        </ImageButton>
+
+        <Frame
+            Grid.Row="1"
+            Margin="0,-40,0,0"
+            Padding="35,35,35,0"
+            CornerRadius="30"
+            VerticalOptions="FillAndExpand">
+            <ScrollView>
+                <StackLayout HorizontalOptions="FillAndExpand" Spacing="15">
+                    <StackLayout HorizontalOptions="Start" Orientation="Horizontal">
+                        <Label
+                            FontAttributes="Bold"
+                            FontFamily="MaterialFontFamily"
+                            FontSize="30"
+                            HorizontalTextAlignment="Center"
+                            Text="{x:Static material:MaterialFonts.MapMarkerRadius}"
+                            TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                        Light={StaticResource Light_TitleTextColor}}"
+                            VerticalOptions="Start"
+                            VerticalTextAlignment="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontFamily="RobotoCondensed"
+                            FontSize="30"
+                            HorizontalTextAlignment="Start"
+                            LineBreakMode="NoWrap"
+                            Text="{Binding SelectedPlace.Location}"
+                            TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                        Light={StaticResource Light_TitleTextColor}}"
+                            VerticalOptions="Start"
+                            VerticalTextAlignment="Center" />
+                    </StackLayout>
+                    <StackLayout
+                        HorizontalOptions="Start"
+                        Orientation="Horizontal"
+                        Spacing="15">
+                        <Label
+                            FontAttributes="Bold"
+                            FontFamily="MaterialFontFamily"
+                            FontSize="30"
+                            HorizontalTextAlignment="Center"
+                            LineBreakMode="NoWrap"
+                            Text="{x:Static material:MaterialFonts.Island}"
+                            TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                        Light={StaticResource Light_TitleTextColor}}"
+                            VerticalOptions="Start"
+                            VerticalTextAlignment="Center" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontFamily="RobotoCondensed"
+                            FontSize="30"
+                            HorizontalTextAlignment="Start"
+                            Text="{Binding SelectedPlace.Name}"
+                            TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                        Light={StaticResource Light_TitleTextColor}}"
+                            VerticalOptions="Start"
+                            VerticalTextAlignment="Center" />
+                    </StackLayout>
+                    <BoxView
+                        BackgroundColor="Gray"
+                        HeightRequest="1"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Start" />
+                    <StackLayout
+                        HorizontalOptions="CenterAndExpand"
+                        Orientation="Horizontal"
+                        Spacing="30">
+                        <Path
+                            Aspect="Fill"
+                            Data="M8.6999969,0C12.300003,0 14,1.5999985 16,4.0999985 18,1.5999985 19.699997,0 23.300003,0 23.800003,0 24.199997,0 24.800003,0.099998474 27.899994,0.40000153 31.599991,3.4000015 32,9.1999969L32,11.099998C31.599991,16.599998 27.599991,23.400002 16,32 4.3999939,23.400002 0.3999939,16.599998 0,11.099998L0,9.1999969C0.3999939,3.4000015 4.0999908,0.40000153 7.1999969,0.099998474 7.6999969,0 8.1999969,0 8.6999969,0z"
+                            Fill="{Binding LikedColor}"
+                            Stroke="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                     Light={StaticResource Light_TitleTextColor}}"
+                            StrokeThickness="2">
+                            <Path.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" />
+                            </Path.GestureRecognizers>
+                        </Path>
+                        <Path
+                            Aspect="Uniform"
+                            Data="M15.999978,12.934C17.69297,12.934 19.064963,14.305999 19.064963,15.998998 19.064963,17.691997 17.69297,19.063995 15.999978,19.063995 14.307985,19.063995 12.935992,17.691997 12.935992,15.998998 12.935992,14.305999 14.307985,12.934 15.999978,12.934z M15.999983,10.498999C12.967983,10.498999 10.499983,12.965998 10.499983,15.998998 10.499983,19.031998 12.967983,21.498998 15.999983,21.498998 19.031983,21.498998 21.499983,19.031998 21.499983,15.998998 21.499983,12.965998 19.031983,10.498999 15.999983,10.498999z M15.999983,8.4989986C20.135983,8.4989986 23.499983,11.862998 23.499983,15.998998 23.499983,20.134998 20.135983,23.498998 15.999983,23.498998 11.863983,23.498998 8.4999828,20.134998 8.4999828,15.998998 8.4999828,11.862998 11.863983,8.4989986 15.999983,8.4989986z M15.999983,5.9989986C10.485983,5.9989986 5.9999828,10.484999 5.9999828,15.998998 5.9999828,21.512998 10.485983,25.998998 15.999983,25.998998 21.513983,25.998998 25.999983,21.512998 25.999983,15.998998 25.999983,10.484999 21.513983,5.9989986 15.999983,5.9989986z M15.999983,0C16.552983,0,16.999983,0.44799995,16.999983,1L16.999983,4.0411167 17.149583,4.053606C22.825688,4.59552,27.360765,9.1078777,27.937914,14.773784L27.957974,14.998998 30.999985,14.998998C31.552984,14.998998 31.999983,15.446998 31.999983,15.998998 31.999983,16.550998 31.552984,16.998998 30.999985,16.998998L27.957865,16.998998 27.945374,17.148598C27.403461,22.824703,22.891103,27.359779,17.225197,27.936929L16.999983,27.956989 16.999983,30.999004C16.999983,31.551006 16.552961,31.999005 15.999983,31.999005 15.447004,31.999005 14.999983,31.551006 14.999983,30.999004L14.999983,27.956989 14.774769,27.936929C9.1088619,27.359779,4.5965033,22.824703,4.0545912,17.148598L4.0421009,16.998998 0.99999714,16.998998C0.4469986,16.998998 0,16.550998 0,15.998998 0,15.446998 0.4469986,14.998998 0.99999714,14.998998L4.0419903,14.998998 4.0620518,14.773785C4.6392012,9.1078777,9.1742773,4.59552,14.850382,4.053606L14.999983,4.0411167 14.999983,1C14.999983,0.44799995,15.446983,0,15.999983,0z"
+                            Fill="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                   Light={StaticResource Light_TitleTextColor}}"
+                            StrokeThickness="2">
+                            <Path.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" />
+                            </Path.GestureRecognizers>
+                        </Path>
+                    </StackLayout>
+                    <StackLayout>
+                        <Label
+                            FontAttributes="Bold"
+                            FontFamily="RobotoCondensed"
+                            FontSize="50"
+                            HorizontalTextAlignment="Start"
+                            Text="Trivia"
+                            TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                        Light={StaticResource Light_TitleTextColor}}"
+                            VerticalOptions="Start"
+                            VerticalTextAlignment="Center" />
+                        <Label
+                            FontFamily="RobotoCondensed"
+                            FontSize="25"
+                            HorizontalOptions="EndAndExpand"
+                            HorizontalTextAlignment="Start"
+                            Text="{Binding SelectedPlace.Trivia}"
+                            TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                        Light={StaticResource Light_TitleTextColor}}"
+                            VerticalOptions="Start"
+                            VerticalTextAlignment="Center" />
+                    </StackLayout>
+                    <Button
+                        BackgroundColor="#2979FF"
+                        Command="{Binding GoBackCommand}"
+                        Text="Go Back"
+                        TextColor="White" />
+                </StackLayout>
+            </ScrollView>
+        </Frame>
+
+    </Grid>
+
+</ContentPage>

@@ -13,7 +13,9 @@
     BackgroundColor="{AppThemeBinding Dark={StaticResource Dark_PageBackgroundColor},
                                       Light={StaticResource Light_PageBackgroundColor}}"
     IsSettingsButtonVisible="True"
-    NavigationPage.HasNavigationBar="True">
+    NavigationPage.HasNavigationBar="True"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="True">
     <views:CustomShellPage.Behaviors>
         <prism:EventToCommandBehavior Command="{Binding PageAppearingCommand}" EventName="Appearing" />
 
@@ -21,22 +23,70 @@
     </views:CustomShellPage.Behaviors>
     <views:CustomShellPage.IconImageSource>
         <FontImageSource
-            FontFamily="{DynamicResource MaterialFontFamily}"
+            FontFamily="MaterialFontFamily"
             Glyph="{x:Static material:MaterialFonts.WalletTravel}"
             Size="44"
-            Color="{DynamicResource TitleTextColor}" />
+            Color="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                    Light={StaticResource Light_TitleTextColor}}" />
     </views:CustomShellPage.IconImageSource>
 
-    <Grid RowDefinitions="20*,20*,50*">
-
-        <StackLayout
+    <Grid RowDefinitions="Auto,Auto,Auto,*">
+        <Frame
             Grid.Row="0"
+            Grid.Column="0"
+            Margin="10"
+            Padding="10"
+            HasShadow="True"
+            HeightRequest="40"
+            HorizontalOptions="FillAndExpand">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <Label
+                    Grid.Column="0"
+                    FontFamily="MaterialFontFamily"
+                    FontSize="Title"
+                    Text="{x:Static material:MaterialFonts.Magnify}"
+                    TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                Light={StaticResource Light_TitleTextColor}}"
+                    VerticalTextAlignment="Center" />
+                <Entry
+                    Grid.Column="1"
+                    FontFamily="RobotoCondensed"
+                    HorizontalOptions="FillAndExpand"
+                    Placeholder="Search"
+                    Text="{Binding KeyWord}"
+                    TextColor="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                Light={StaticResource Light_TitleTextColor}}" />
+                <ImageButton
+                    Grid.Column="2"
+                    Padding="10,10,10,0"
+                    BackgroundColor="Transparent"
+                    BorderWidth="5"
+                    Command="{Binding ClearSearchCommand}"
+                    HeightRequest="55"
+                    IsVisible="{Binding IsClearButtonVisible}"
+                    VerticalOptions="CenterAndExpand"
+                    Visual="Material"
+                    WidthRequest="55">
+                    <ImageButton.Source>
+                        <FontImageSource
+                            FontFamily="MaterialFontFamily"
+                            Glyph="{x:Static material:MaterialFonts.Close}"
+                            Size="55"
+                            Color="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                    Light={StaticResource Light_TitleTextColor}}" />
+                    </ImageButton.Source>
+                </ImageButton>
+            </Grid>
+
+        </Frame>
+        <StackLayout
+            Grid.Row="1"
             Grid.Column="0"
             Padding="10">
             <StackLayout Margin="5,5,5,5" Orientation="Horizontal">
                 <Label
                     FontAttributes="Bold"
-                    FontFamily="{StaticResource MaterialFontFamily}"
+                    FontFamily="MaterialFontFamily"
                     FontSize="Title"
                     HorizontalTextAlignment="Start"
                     LineBreakMode="NoWrap"
@@ -47,7 +97,7 @@
                     VerticalTextAlignment="Center" />
                 <Label
                     FontAttributes="Bold"
-                    FontFamily="{StaticResource RobotoCondensed}"
+                    FontFamily="RobotoCondensed"
                     FontSize="Title"
                     HorizontalTextAlignment="Start"
                     LineBreakMode="NoWrap"
@@ -62,6 +112,7 @@
                 IsEnabled="True"
                 IsRefreshing="{Binding IsRefreshing}">
                 <CollectionView
+                    HeightRequest="50"
                     ItemSizingStrategy="MeasureAllItems"
                     ItemsSource="{Binding Cities}"
                     SelectedItem="{Binding SelectedCity}"
@@ -109,13 +160,13 @@
 
         </StackLayout>
         <StackLayout
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="0"
             Padding="10">
             <StackLayout Margin="5,5,5,5" Orientation="Horizontal">
                 <Label
                     FontAttributes="Bold"
-                    FontFamily="{StaticResource MaterialFontFamily}"
+                    FontFamily="MaterialFontFamily"
                     FontSize="Title"
                     HorizontalTextAlignment="Start"
                     LineBreakMode="NoWrap"
@@ -126,7 +177,7 @@
                     VerticalTextAlignment="Center" />
                 <Label
                     FontAttributes="Bold"
-                    FontFamily="{StaticResource RobotoCondensed}"
+                    FontFamily="RobotoCondensed"
                     FontSize="Title"
                     HorizontalTextAlignment="Start"
                     LineBreakMode="NoWrap"
@@ -137,6 +188,7 @@
                     VerticalTextAlignment="Center" />
             </StackLayout>
             <CollectionView
+                HeightRequest="50"
                 ItemSizingStrategy="MeasureAllItems"
                 ItemsSource="{Binding Categories}"
                 SelectedItem="{Binding SelectedCategory}"
@@ -183,13 +235,13 @@
             </CollectionView>
         </StackLayout>
         <StackLayout
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.Column="0"
             Padding="10">
             <StackLayout Margin="5,5,5,5" Orientation="Horizontal">
                 <Label
                     FontAttributes="Bold"
-                    FontFamily="{StaticResource MaterialFontFamily}"
+                    FontFamily="MaterialFontFamily"
                     FontSize="Title"
                     HorizontalTextAlignment="Start"
                     LineBreakMode="NoWrap"
@@ -200,7 +252,7 @@
                     VerticalTextAlignment="Center" />
                 <Label
                     FontAttributes="Bold"
-                    FontFamily="{StaticResource RobotoCondensed}"
+                    FontFamily="RobotoCondensed"
                     FontSize="Title"
                     HorizontalTextAlignment="Start"
                     LineBreakMode="NoWrap"
@@ -213,17 +265,17 @@
             <CollectionView
                 x:Name="PlacesCollectionView"
                 ItemSizingStrategy="MeasureAllItems"
-                ItemsSource="{Binding Places}">
+                ItemsSource="{Binding Places}"
+                SelectedItem="{Binding SelectedPlace}"
+                SelectionChangedCommand="{Binding PlaceSelectionChangeCommand}"
+                SelectionMode="Single">
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout
-                        ItemSpacing="5"
-                        Orientation="Horizontal"
-                        SnapPointsType="MandatorySingle" />
+                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="40" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.EmptyView>
                     <StackLayout>
                         <Label
-                            FontFamily="{StaticResource RobotoCondensed}"
+                            FontFamily="RobotoCondensed"
                             FontSize="Subtitle"
                             HorizontalOptions="CenterAndExpand"
                             IsVisible="{Binding IsPlacesLoaded}"
@@ -238,7 +290,7 @@
                             </Label.Text>
                         </Label>
                         <Label
-                            FontFamily="{StaticResource RobotoCondensed}"
+                            FontFamily="RobotoCondensed"
                             FontSize="Subtitle"
                             HorizontalOptions="CenterAndExpand"
                             IsVisible="{Binding IsPlaceStillLoading}"
@@ -247,7 +299,7 @@
                                                         Light={StaticResource Light_TitleTextColor}}"
                             VerticalOptions="CenterAndExpand" />
                         <Label
-                            FontFamily="{StaticResource RobotoCondensed}"
+                            FontFamily="RobotoCondensed"
                             FontSize="Subtitle"
                             HorizontalOptions="CenterAndExpand"
                             IsVisible="{Binding IsNoPlaces}"
@@ -260,86 +312,69 @@
                 </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid
-                            ColumnDefinitions="Auto"
-                            RowDefinitions="Auto,Auto,Auto"
-                            Style="{StaticResource CollectionViewItemGrid}">
-                            <Path
-                                Grid.Row="0"
-                                Margin="0,0,0,0"
-                                Aspect="Fill"
-                                Data="M3.6000366,0L28.400024,0C30.400024,0,32,1.6000366,32,3.6000366L32,28.400024C32,30.400024,30.400024,32,28.400024,32L3.6000366,32C1.6000366,32,0,30.400024,0,28.400024L0,3.6000366C0,1.6000366,1.6000366,0,3.6000366,0z"
-                                Fill="{AppThemeBinding Dark={StaticResource Dark_FrameBackgroundColor},
-                                                       Light={StaticResource Light_FrameBackgroundColor}}"
-                                HeightRequest="275"
-                                Stroke="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
-                                                         Light={StaticResource Light_TitleTextColor}}"
-                                WidthRequest="350" />
-                            <StackLayout Grid.Row="0" Padding="10">
+                        <Frame
+                            Margin="5,10"
+                            Padding="0"
+                            BackgroundColor="White"
+                            CornerRadius="5"
+                            HasShadow="True"
+                            HeightRequest="200">
+                            <Grid RowDefinitions="Auto,*">
                                 <forms:CachedImage
-                                    Aspect="AspectFill"
+                                    Aspect="Fill"
                                     BitmapOptimizations="False"
                                     DownsampleToViewSize="True"
                                     ErrorPlaceholder="ic_defaultavatar.png"
-                                    HeightRequest="150"
-                                    HorizontalOptions="Center"
+                                    HeightRequest="115"
                                     LoadingDelay="0"
                                     LoadingPlaceholder="ic_imageloader.gif"
+                                    Opacity="100"
                                     RetryCount="3"
-                                    RetryDelay="5"
-                                    Source="{Binding ImageUrl}"
-                                    VerticalOptions="Center"
-                                    WidthRequest="150">
-                                    <forms:CachedImage.Transformations>
-                                        <ffTransformations:RoundedTransformation
-                                            BorderHexColor="#FFFFFF"
-                                            BorderSize="10"
-                                            Radius="240" />
-                                    </forms:CachedImage.Transformations>
-                                </forms:CachedImage>
-                                <Label
-                                    Style="{StaticResource PlaceText}"
-                                    Text="{Binding Name}"
-                                    WidthRequest="250" />
-                            </StackLayout>
-                            <ImageButton
-                                Padding="10,10,10,0"
-                                BackgroundColor="Transparent"
-                                BorderWidth="5"
-                                Command="{Binding BindingContext.LikeUnlikeCommand, Source={x:Reference PlacesCollectionView}}"
-                                CommandParameter="{Binding .}"
-                                HorizontalOptions="End"
-                                VerticalOptions="Start"
-                                Visual="Material">
-                                <ImageButton.Source>
-                                    <FontImageSource
-                                        FontFamily="{DynamicResource MaterialFontFamily}"
-                                        Glyph="{x:Static material:MaterialFonts.Heart}"
-                                        Size="50"
-                                        Color="{Binding LikedColor}" />
-                                </ImageButton.Source>
+                                    RetryDelay="0"
+                                    Source="{Binding ImageUrl}" />
 
-                            </ImageButton>
-                            <ImageButton
-                                Padding="10,10,10,0"
-                                BackgroundColor="Transparent"
-                                BorderWidth="5"
-                                Command="{Binding BindingContext.NavigateDestinationCommand, Source={x:Reference PlacesCollectionView}}"
-                                CommandParameter="{Binding .}"
-                                HorizontalOptions="Start"
-                                VerticalOptions="Start"
-                                Visual="Material">
-                                <ImageButton.Source>
-                                    <FontImageSource
-                                        FontFamily="{DynamicResource MaterialFontFamily}"
-                                        Glyph="{x:Static material:MaterialFonts.Map}"
-                                        Size="50"
-                                        Color="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
-                                                                Light={StaticResource Light_TitleTextColor}}" />
-                                </ImageButton.Source>
+                                <StackLayout Grid.Row="1" Margin="10,0">
+                                    <Label
+                                        Style="{StaticResource PlaceText}"
+                                        Text="{Binding Name}"
+                                        WidthRequest="250" />
+                                    <StackLayout
+                                        HorizontalOptions="CenterAndExpand"
+                                        Orientation="Horizontal"
+                                        VerticalOptions="EndAndExpand">
+                                        <Path
+                                            Aspect="Uniform"
+                                            Data="M8.6999969,0C12.300003,0 14,1.5999985 16,4.0999985 18,1.5999985 19.699997,0 23.300003,0 23.800003,0 24.199997,0 24.800003,0.099998474 27.899994,0.40000153 31.599991,3.4000015 32,9.1999969L32,11.099998C31.599991,16.599998 27.599991,23.400002 16,32 4.3999939,23.400002 0.3999939,16.599998 0,11.099998L0,9.1999969C0.3999939,3.4000015 4.0999908,0.40000153 7.1999969,0.099998474 7.6999969,0 8.1999969,0 8.6999969,0z"
+                                            Fill="{Binding LikedColor}"
+                                            Stroke="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                                     Light={StaticResource Light_TitleTextColor}}"
+                                            StrokeThickness="2">
+                                            <Path.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding BindingContext.LikeUnlikeCommand, Source={x:Reference PlacesCollectionView}}"
+                                                    CommandParameter="{Binding .}"
+                                                    NumberOfTapsRequired="1" />
+                                            </Path.GestureRecognizers>
+                                        </Path>
+                                        <Path
+                                            Aspect="Uniform"
+                                            Data="M15.999978,12.934C17.69297,12.934 19.064963,14.305999 19.064963,15.998998 19.064963,17.691997 17.69297,19.063995 15.999978,19.063995 14.307985,19.063995 12.935992,17.691997 12.935992,15.998998 12.935992,14.305999 14.307985,12.934 15.999978,12.934z M15.999983,10.498999C12.967983,10.498999 10.499983,12.965998 10.499983,15.998998 10.499983,19.031998 12.967983,21.498998 15.999983,21.498998 19.031983,21.498998 21.499983,19.031998 21.499983,15.998998 21.499983,12.965998 19.031983,10.498999 15.999983,10.498999z M15.999983,8.4989986C20.135983,8.4989986 23.499983,11.862998 23.499983,15.998998 23.499983,20.134998 20.135983,23.498998 15.999983,23.498998 11.863983,23.498998 8.4999828,20.134998 8.4999828,15.998998 8.4999828,11.862998 11.863983,8.4989986 15.999983,8.4989986z M15.999983,5.9989986C10.485983,5.9989986 5.9999828,10.484999 5.9999828,15.998998 5.9999828,21.512998 10.485983,25.998998 15.999983,25.998998 21.513983,25.998998 25.999983,21.512998 25.999983,15.998998 25.999983,10.484999 21.513983,5.9989986 15.999983,5.9989986z M15.999983,0C16.552983,0,16.999983,0.44799995,16.999983,1L16.999983,4.0411167 17.149583,4.053606C22.825688,4.59552,27.360765,9.1078777,27.937914,14.773784L27.957974,14.998998 30.999985,14.998998C31.552984,14.998998 31.999983,15.446998 31.999983,15.998998 31.999983,16.550998 31.552984,16.998998 30.999985,16.998998L27.957865,16.998998 27.945374,17.148598C27.403461,22.824703,22.891103,27.359779,17.225197,27.936929L16.999983,27.956989 16.999983,30.999004C16.999983,31.551006 16.552961,31.999005 15.999983,31.999005 15.447004,31.999005 14.999983,31.551006 14.999983,30.999004L14.999983,27.956989 14.774769,27.936929C9.1088619,27.359779,4.5965033,22.824703,4.0545912,17.148598L4.0421009,16.998998 0.99999714,16.998998C0.4469986,16.998998 0,16.550998 0,15.998998 0,15.446998 0.4469986,14.998998 0.99999714,14.998998L4.0419903,14.998998 4.0620518,14.773785C4.6392012,9.1078777,9.1742773,4.59552,14.850382,4.053606L14.999983,4.0411167 14.999983,1C14.999983,0.44799995,15.446983,0,15.999983,0z"
+                                            Fill="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor},
+                                                                   Light={StaticResource Light_TitleTextColor}}"
+                                            StrokeThickness="2">
+                                            <Path.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding BindingContext.NavigateDestinationCommand, Source={x:Reference PlacesCollectionView}}"
+                                                    CommandParameter="{Binding .}"
+                                                    NumberOfTapsRequired="1" />
+                                            </Path.GestureRecognizers>
+                                        </Path>
 
-                            </ImageButton>
-                        </Grid>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

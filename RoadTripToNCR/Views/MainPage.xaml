@@ -49,6 +49,16 @@
             </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:PlacePage}" />
         </Tab>
+        <Tab Title="Settings">
+            <Tab.Icon>
+                <FontImageSource
+                    FontFamily="MaterialFontFamily"
+                    Glyph="{x:Static material:MaterialFonts.Cog}"
+                    Size="44"
+                    Color="{DynamicResource TitleTextColor}" />
+            </Tab.Icon>
+            <ShellContent ContentTemplate="{DataTemplate views:SettingsPage}" />
+        </Tab>
 
     </TabBar>
 </Shell>

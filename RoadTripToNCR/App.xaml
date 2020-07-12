@@ -16,7 +16,7 @@
             <Color x:Key="Dark_TabbedSelectedColor">#FEFDFE</Color>
             <Color x:Key="Dark_TabbedUnSelectedColor">#8F8E90</Color>
 
-            <Color x:Key="Light_PageBackgroundColor">#FFFEFF</Color>
+            <Color x:Key="Light_PageBackgroundColor">#ECEFF1</Color>
             <Color x:Key="Light_FrameSelectedColor">#00ACC1</Color>
             <Color x:Key="Light_FrameBackgroundColor">#80DEEA</Color>
             <Color x:Key="Light_NavigationBarColor">#F5F5F5</Color>
@@ -29,7 +29,7 @@
 
             <Style x:Key="ItemText" TargetType="Label">
                 <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor}, Light={StaticResource Light_TitleTextColor}}" />
-                <Setter Property="FontFamily" Value="{StaticResource RobotoCondensed}" />
+                <Setter Property="FontFamily" Value="RobotoCondensed" />
                 <Setter Property="FontSize" Value="Title" />
                 <Setter Property="HorizontalTextAlignment" Value="Center" />
                 <Setter Property="VerticalTextAlignment" Value="Center" />
@@ -39,9 +39,9 @@
             <Style x:Key="PlaceText" TargetType="Label">
                 <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource Dark_TitleTextColor}, Light={StaticResource Light_TitleTextColor}}" />
                 <Setter Property="FontFamily" Value="RobotoCondensed" />
-                <Setter Property="FontSize" Value="Title" />
-                <Setter Property="HorizontalTextAlignment" Value="Center" />
-                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="FontSize" Value="Subtitle" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalTextAlignment" Value="Start" />
                 <Setter Property="VerticalOptions" Value="Center" />
                 <Setter Property="LineBreakMode" Value="WordWrap" />
             </Style>

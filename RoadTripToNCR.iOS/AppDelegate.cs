@@ -21,6 +21,7 @@ namespace RoadTripToNCR.iOS
         //
         // You have 17 seconds to return from this method, or iOS will terminate your application.
         //
+
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
 
@@ -30,7 +31,6 @@ namespace RoadTripToNCR.iOS
             global::Xamarin.Forms.FormsMaterial.Init();
             AnimationViewRenderer.Init();
             LoadApplication(new App(new iOSInitializer()));
-
             return base.FinishedLaunching(app, options);
         }
     }

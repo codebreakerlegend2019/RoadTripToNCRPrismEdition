@@ -1,5 +1,6 @@
 ﻿using ImTools;
 using MonkeyCache.SQLite;
+using Newtonsoft.Json;
 using Plugin.Toast;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -33,6 +34,33 @@ namespace RoadTripToNCR.ViewModels
 
         public bool IsRefreshing { get; set; }
 
+        private bool _isClearButtonVisible;
+        public bool IsClearButtonVisible
+        {
+            get => _isClearButtonVisible;
+            set
+            {
+                _isClearButtonVisible = value;
+                RaisePropertyChanged();
+            }
+        }
+        private string _keyWord;
+        public string KeyWord
+        {
+            get => _keyWord ?? "";
+            set
+            {
+                _keyWord = value;
+                if (value == string.Empty)
+                    _isClearButtonVisible = false;
+                else
+                    _isClearButtonVisible = true;
+                filterPlaces(value.ToLower());
+                RaisePropertyChanged(nameof(IsClearButtonVisible));
+                RaisePropertyChanged();
+            }
+        }
+
         private List<City> _cities;
         public List<City> Cities
         {
@@ -56,6 +84,15 @@ namespace RoadTripToNCR.ViewModels
         {
             get => _selectedCity;
             set { _selectedCity = value; }
+        }
+        private Place _selectedPlace;
+        public Place SelectedPlace
+        {
+            get => _selectedPlace;
+            set 
+            { _selectedPlace = value;
+                RaisePropertyChanged();
+            }
         }
 
         private Category _selectedCategory;
@@ -95,6 +132,31 @@ namespace RoadTripToNCR.ViewModels
             await LoadPlaces();
         }
 
+        private void foreachPlace(List<Place> placesToFilter,string searchData,List<Place> filteredPlaces)
+        {
+            foreach (var place in placesToFilter.Where(x => x.City == _selectedCity.FilterName).ToList())
+            {
+                var searchMatch = place.Name.ToLower().Contains(searchData)
+                   || place.Trivia.ToLower().Contains(searchData);
+                if (searchMatch)
+                    filteredPlaces.Add(place);
+            }
+        }
+        private void filterPlaces(string searchData)
+        {
+            if (_places != null)
+            {
+                var places = new List<Place>();
+                if (_selectedCity != null && _selectedCategory==null)
+                    foreachPlace(_places.Where(x => x.City == _selectedCity.FilterName).ToList(), searchData,places);
+                else if (_selectedCity != null && _selectedCategory != null)
+                    foreachPlace(_places.Where(x => x.City == _selectedCity.FilterName && x.Type == _selectedCategory.FilterName).ToList(), searchData, places);
+                else
+                    foreachPlace(_places, searchData, places);
+                Places = places;
+                RaisePropertyChanged(nameof(Places));
+            }
+        }
         public DelegateCommand ReloadCommand => new DelegateCommand(async () =>
          {
              IsRefreshing = true;
@@ -108,6 +170,11 @@ namespace RoadTripToNCR.ViewModels
             await LoadPlaces();
         });
 
+        public DelegateCommand ClearSearchCommand => new DelegateCommand(() =>
+        {
+            _keyWord = string.Empty;
+            RaisePropertyChanged(nameof(KeyWord));
+        });
         private void UpdateCities()
         {
             if(_selectedCity!=null)
@@ -155,10 +222,21 @@ namespace RoadTripToNCR.ViewModels
             if (_places != null)
             {
                 UpdateCities();
-                Places = _places.Where(x => x.City == SelectedCity.FilterName)
-                .OrderBy(x => x.Name)
-                .ToList();
-                RaisePropertyChanged(nameof(Places));
+                if (_selectedCategory != null)
+                {
+
+                    Places = _places.Where(x => x.City == SelectedCity.FilterName && x.Type == _selectedCategory.FilterName)
+                    .OrderBy(x => x.Name)
+                    .ToList();
+                    RaisePropertyChanged(nameof(Places));
+                }
+                else
+                {
+                    Places = _places.Where(x => x.City == SelectedCity.FilterName)
+                   .OrderBy(x => x.Name)
+                   .ToList();
+                    RaisePropertyChanged(nameof(Places));
+                }
             }
             else
             {
@@ -166,6 +244,13 @@ namespace RoadTripToNCR.ViewModels
                 RaisePropertyChanged(nameof(SelectedCity));
                 await App.Current.MainPage.DisplayAlert("Info", "Places are still Loading", "OK");
             }
+        });
+
+        public DelegateCommand PlaceSelectionChangeCommand => new DelegateCommand(async () =>
+        {
+            var jsonContent = JsonConvert.SerializeObject(_selectedPlace);
+            await Shell.Current.GoToAsync($"/PlaceDetailPage?Content={jsonContent}");
+            _selectedPlace = null;
         });
 
         private void UpdateCategories()
@@ -199,9 +284,9 @@ namespace RoadTripToNCR.ViewModels
            }
            else
            {
+               CrossToastPopUp.Current.ShowToastMessage("Please Select City First");
                SelectedCategory = null;
                RaisePropertyChanged(nameof(SelectedCategory));
-               await App.Current.MainPage.DisplayAlert("Info", "Please Select City First", "OK");
            }
 
        });
